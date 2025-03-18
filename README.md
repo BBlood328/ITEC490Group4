@@ -1,4 +1,4 @@
-### Gaming Backlog Recommendation Generator App
+# Gaming Backlog Recommendation Generator App
 
 ## UI Mockups
 
