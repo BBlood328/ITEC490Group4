@@ -2,8 +2,10 @@
 
 ## To Run Web App
 
+```
 cd ITEC490Group4/Testing
 npm start
+```
 
 ## UI Mockups
 
