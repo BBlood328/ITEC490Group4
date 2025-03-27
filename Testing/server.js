@@ -6,7 +6,6 @@ const app = express();
 const apiKey = "7902896BCA5AE5A60C7CC073AE6E3883"; // API key
 
 app.use(cors()); // Enable CORS
-app.use(express.static("public")); // Handles requests to the html pages
 
 //https://www.npmjs.com/package/steam-signin implement later for steam login
 
@@ -33,6 +32,14 @@ app.get("/api/games", async (req, res) => {
       .status(500)
       .json({ error: `Error fetching games data: ${error.message}` });
   }
+});
+
+// Serve the static React files after building them
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// For any other routes, send the React app (this handles routing in React)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 app.listen(3000, () => {
