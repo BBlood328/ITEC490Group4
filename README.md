@@ -1,10 +1,20 @@
 # Gaming Backlog Recommendation Generator App
 
+## To Run Web App
+
+cd ITEC490Group4/Testing
+npm start
+
 ## UI Mockups
 
 ![Alt text](assets/images/landingPage-Omar.png)
-![Alt text](assets/images/steamAccountLog-Omar.png)
-![Alt text](assets/images/langingPage-Alexander.png)
+
+<!-- ![Alt text](assets/images/steamAccountLog-Omar.png) -->
+
+![Alt text](assets/images/surveyPage-Omar.png)
+
+<!-- ![Alt text](assets/images/langingPage-Alexander.png) -->
+
 ![Alt text](assets/images/resultsPage-Alexander.png)
 
 ## Tech stack
