@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <link href="./css/resultstyle.css"
     rel="stylesheet">
+	<script src="./js/FetchGamesResultsTest.js"></script>
 </head>
 <body>
     <header>
@@ -19,7 +20,7 @@
 		</div>
 	</header>
 	<main>
-		<table id="topchart">
+		<table id="gamesList">
 			<tr>
 				<th>Title</th>
     			<th>Rating</th>
@@ -58,8 +59,9 @@
 			</tr>
 		</table>
 	</main>
+	<input type="text" id="steamID" name="steamID">
 	<div class="reroll-button">
-		<button id="reroll">Reroll</button>
+		<button onclick="fetchGames()" id="reroll">Reroll</button> 
 	</div>
 </body>
 
