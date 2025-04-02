@@ -32,6 +32,27 @@ app.get('/api/games', async (req, res) => {
     }
 });
 
+app.get('/api/gameDetails', async (req, res) => {
+    const { appid } = req.query;
+
+    if (!appid) {
+        res.status(400).send('Missing appid parameter');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://store.steampowered.com/api/appdetails?appids=${appid}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const json = await response.json();
+        res.json(json);
+    } catch (error) {
+        console.error('Error fetching game details:', error);
+        res.status(500).json({ error: `Error fetching game details: ${error.message}` });
+    }
+});
+
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
