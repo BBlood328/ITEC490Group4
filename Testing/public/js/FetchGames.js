@@ -5,6 +5,7 @@ let storedGames = []; // Global array to store game data
 // Function to fetch games data
 async function fetchGames() {
     const steamId = document.getElementById('steamID').value;
+    const hoursPlayedValue = parseInt(document.getElementById('hoursPlayed').value, 10);
 
     if (!steamId) {
         alert('Please enter your SteamID64.');
@@ -15,12 +16,14 @@ async function fetchGames() {
         const response = await fetch(`http://localhost:3000/api/games?steamid=${steamId}`);
         const data = await response.json();
         
-        // Store game data in the global array
-        storedGames = data.response.games.map(game => ({
-            name: game.name,
-            appid: game.appid,
-            playtime: Math.ceil(game.playtime_forever / 60) // Convert minutes to hours, rounding up
-        }));
+        // Store game data in the global array, filtering by playtime
+        storedGames = data.response.games
+            .filter(game => game.playtime_forever / 60 < hoursPlayedValue) // Filter games
+            .map(game => ({
+                name: game.name,
+                appid: game.appid,
+                playtime: (game.playtime_forever / 60).toFixed(1) // Convert minutes to hours
+            }));
 
         console.log('Stored Games:', storedGames); // Log the stored games for debugging
 

@@ -34,6 +34,15 @@ async function fetchGames() {
     }
 }
 
+// TODO add fetchGameDetails() fetch and add game details to storedGames and the dynamic table
+
+
+// TODO add filterGames() filter the storedGames array by additional user inputs and copy them to a clean filteredStoredGames array
+
+
+// TODO edit displayGames() to only display a few games at a time picked at random from the filteredStoredGames array
+
+
 // Function to display games in a dynamic table
 function displayGames() {
     const gamesList = document.getElementById('gamesList');

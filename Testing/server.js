@@ -3,12 +3,12 @@ const fetch = require("node-fetch");
 const cors = require("cors");
 
 const app = express();
-const apiKey = "7902896BCA5AE5A60C7CC073AE6E3883"; // API key
+const apiKey = "7902896BCA5AE5A60C7CC073AE6E3883"; // API key *hide this from githib in config file later*
 
 app.use(cors()); // Enable CORS
 app.use(express.static("public")); // Handles requests to the html pages
 
-//https://www.npmjs.com/package/steam-signin implement later for steam login
+// https://www.npmjs.com/package/steam-signin implement later for steam login?
 
 app.get("/api/games", async (req, res) => {
   const { steamid } = req.query;
