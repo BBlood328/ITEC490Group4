@@ -22,7 +22,7 @@ async function fetchGames() {
             .map(game => ({
                 name: game.name,
                 appid: game.appid,
-                playtime: Math.ceil(game.playtime_forever / 60) // Convert minutes to hours, rounding up
+                playtime: (game.playtime_forever / 60).toFixed(1) // Convert minutes to hours
             }));
 
         console.log('Stored Games:', storedGames); // Log the stored games for debugging
