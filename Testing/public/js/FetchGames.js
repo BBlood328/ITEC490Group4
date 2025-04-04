@@ -4,16 +4,16 @@ let storedGames = []; // Global array to store game data
 
 // Function to fetch games data
 async function fetchGames() {
-    const steamId = document.getElementById('steamID').value;
+    // const steamId = document.getElementById('steamID').value;
     const hoursPlayedValue = parseInt(document.getElementById('hoursPlayed').value, 10);
 
-    if (!steamId) {
-        alert('Please enter your SteamID64.');
-        return;
-    }
+    // if (!steamId) {
+    //     alert('Please enter your SteamID64.');
+    //     return;
+    // }
 
     try {
-        const response = await fetch(`http://localhost:3000/api/games?steamid=${steamId}`);
+        const response = await fetch(`http://localhost:3000/api/games`);
         const data = await response.json();
         
         // Store game data in the global array, filtering by playtime
@@ -33,6 +33,15 @@ async function fetchGames() {
         console.error('Error fetching games data:', error);
     }
 }
+
+// TODO add fetchGameDetails() fetch and add game details to storedGames and the dynamic table
+
+
+// TODO add filterGames() filter the storedGames array by additional user inputs and copy them to a clean filteredStoredGames array
+
+
+// TODO edit displayGames() to only display a few games at a time picked at random from the filteredStoredGames array
+
 
 // Function to display games in a dynamic table
 function displayGames() {
