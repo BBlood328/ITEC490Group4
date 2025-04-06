@@ -7,18 +7,20 @@ body {
 
 header {
         background-color: rgb(72, 91, 113);
-        font-size: x-large;
+        font-size: large;
         display: grid;
-        padding: 20px 0;
+        padding: 10px 0;
         grid-template-rows: auto;
-        grid-template-columns: 35% 20% 45%;
+        grid-template-columns: 50% 50%;
+        
 }
 
 table   {
         background-color: rgb(143, 170, 201);
-        width: 100%;
+        width: 90%;
         font-size: x-large;
         border-collapse: collapse;
+        margin: auto;
 }
 
 td, th {
@@ -35,12 +37,24 @@ td:first-child, th:first-child {
         width: 60%;
 }
 
-.reroll-button {
+button {
+        margin: 10px;
+}
+
+.dataentry {
+        margin-left: 2%;
+}
+
+.fetch-button {
         width: 20%;
         margin: auto;
 }
 
-#reroll {
+#fetch {
         font-size: x-large;
         width: 100%;
+}
+
+#hoursPlayedValue {
+        margin-left: 10px; /* Add space between slider and value */
 }

@@ -1,68 +1,45 @@
-<!DOCTYPE HTML>
-<!--Alexander Timmerman 3-16-2025-->
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Database Results</title>
-    <meta charset="utf-8">
-    <link href="./css/resultstyle.css"
-    rel="stylesheet">
-	<script src="./js/FetchGamesResultsTest.js"></script>
+    <meta charset="UTF-8">
+	<link href="./css/resultstyle.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <script src="./js/FetchGames.js" defer></script>
 </head>
 <body>
     <header>
-		<h2>steamusername</h2>
-		<div><button id="retake">Retake Survey</button></div>
+		<div class="dataentry">
+			<h1>Steam API Test Page</h1>
+    		<p>Enter your SteamID64 to fetch your games:</p>    
+    		<div>
+        	<label for="steamID">SteamID64:</label>
+        	<input type="text" id="steamID" name="steamID" value="76561197998872013">
+    		</div>
+			<div>
+			<label for="hoursPlayed">Include games with less than this many hours played:</label>
+			<input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="5" step="1" oninput="updateHoursPlayedValue(this.value)">
+			<span id="hoursPlayedValue">3</span>
+			</div>
+		</div>
 		<div class="sort-groups">
 			<label>Sort by:</label>
 			<button>Ratings</button>
 			<button>Release</button>
 			<button>Playtime</button>
+		<!--<select> 
+				<option value="ratings">Ratings</option>
+				<option value="release">Release</option>
+				<option value="playtime">Playtime</option>
+			</select> -->
 		</div>
 	</header>
 	<main>
-		<table id="gamesList">
-			<tr>
-				<th>Title</th>
-    			<th>Rating</th>
-    			<th>Release Date</th>
-    			<th>Playtime</th>
-			</tr>
-			<tr>
-				<td>Game 1</td>
-    			<td>94.45%</td>
-    			<td>Dec 2024</td>
-    			<td>0.2 hrs</td>
-			</tr>
-			<tr>
-				<td>Game 2</td>
-    			<td>92.62%</td>
-    			<td>Jan 2021</td>
-    			<td>28.4 hrs</td>
-			</tr>
-			<tr>
-				<td>Game 3</td>
-    			<td>90.37%</td>
-    			<td>Mar 2022</td>
-    			<td>9.7 hrs</td>
-			</tr>
-			<tr>
-				<td>Game 4</td>
-    			<td>89.03%</td>
-    			<td>Jun 2019</td>
-    			<td>0 hrs</td>
-			</tr>
-			<tr>
-				<td>Game 5</td>
-    			<td>86.31%</td>
-    			<td>May 2011</td>
-    			<td>2.3 hrs</td>
-			</tr>
-		</table>
+		<div class="fetch-button">
+			<button onclick="fetchGames()" id="fetch">Fetch Games</button> 
+		</div>
+		<div id="gamesList"></div>
 	</main>
-	<input type="text" id="steamID" name="steamID">
-	<div class="reroll-button">
-		<button onclick="fetchGames()" id="reroll">Reroll</button> 
-	</div>
 </body>
 
 </html>
