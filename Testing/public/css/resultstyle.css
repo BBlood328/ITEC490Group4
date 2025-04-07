@@ -53,8 +53,8 @@ button {
 #fetch {
         font-size: x-large;
         width: 100%;
-}
-
-#hoursPlayedValue {
-        margin-left: 10px; /* Add space between slider and value */
+        color: rgb(209, 229, 250);
+        background-color: rgb(19, 26, 34);
+        border-color: rgb(0, 0, 0);
+        border-radius: 10px;
 }
