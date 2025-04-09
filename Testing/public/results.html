@@ -1,53 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-	<link href="./css/resultstyle.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="./css/resultstyle.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Test</title>
     <script src="./js/FetchGames.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-		<div class="dataentry">
-			<h1>Steam API Test Page</h1>
-    		<p>Enter your SteamID64 to fetch your games:</p>    
-    		<div>
-        		<label for="steamID">SteamID64:</label>
-        		<input type="text" id="steamID" name="steamID" value="76561197998872013">
-    		</div>
-			<div>
-				<label for="hoursPlayed">Include games with less than this many hours played:</label>
-				<input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="5" step="1" oninput="updateHoursPlayedValue(this.value)">
-				<span id="hoursPlayedValue">3</span>
-			</div>
-			<h3>Recommendation Survey</h3>
-    		<p>Questions here</p>
+      <div class="dataentry">
+        <h1>Steam API Test Page</h1>
+        <p>Enter your SteamID64 to fetch your games:</p>
+        <div>
+          <label for="steamID">SteamID64:</label>
+          <input
+            type="text"
+            id="steamID"
+            name="steamID"
+            value="76561197998872013"
+          />
+        </div>
+        <div>
+          <label for="hoursPlayed"
+            >Include games with less than this many hours played:</label
+          >
+          <input
+            type="range"
+            id="hoursPlayed"
+            name="hoursPlayed"
+            min="1"
+            max="5"
+            step="1"
+            oninput="updateHoursPlayedValue(this.value)"
+          />
+          <span id="hoursPlayedValue">3</span>
+        </div>
+        <h3>Recommendation Survey</h3>
+        <p>Questions here</p>
 
-    		<button onclick="filterGames()">Reccomend Games</button>
+        <button onclick="filterGames()">Reccomend Games</button>
 
-    		<h3>Recommended Backlog Games</h3>
-    		<div id="recommendedBacklog"><p>No recommended games to display yet.</p></div> <!-- The Complete Backlog List-->
-    		<button onclick="displayRecommendedBacklog()">Reroll</button>
-		</div>
-		<div class="sort-groups">
-			<label>Sort by:</label>
-			<button>Ratings</button>
-			<button>Release</button>
-			<button>Playtime</button>
-		<!--<select> 
+        <h3>Recommended Backlog Games</h3>
+        <div id="recommendedBacklog">
+          <p>No recommended games to display yet.</p>
+        </div>
+        <!-- The Complete Backlog List-->
+        <button onclick="displayRecommendedBacklog()">Reroll</button>
+      </div>
+      <div class="sort-groups">
+        <label>Sort by:</label>
+        <button>Ratings</button>
+        <button>Release</button>
+        <button>Playtime</button>
+        <!--<select> 
 				<option value="ratings">Ratings</option>
 				<option value="release">Release</option>
 				<option value="playtime">Playtime</option>
 			</select> -->
-		</div>
-	</header>
-	<main>
-		<div class="fetch-button">
-			<button onclick="fetchGames()" id="fetch">Fetch Games</button> 
-		</div>
-		<div id="fullBacklog">No games to display yet.</div>
-	</main>
-</body>
-
+      </div>
+    </header>
+    <main>
+      <div class="fetch-button">
+        <button onclick="fetchGames()" id="fetch">Fetch Games</button>
+      </div>
+      <div id="fullBacklog">No games to display yet.</div>
+    </main>
+    <!-- <input type="text" id="steamID" name="steamID"> -->
+    <div class="reroll-button">
+      <button onclick="fetchGames()" id="reroll">Reroll</button>
+    </div>
+  </body>
 </html>

@@ -1,4 +1,6 @@
 const express = require("express");
+const session = require("express-session");
+const SteamSignIn = require("steam-signin");
 const fetch = require("node-fetch");
 const cors = require("cors");
 
@@ -7,11 +9,51 @@ const apiKey = "7902896BCA5AE5A60C7CC073AE6E3883"; // API key *hide this from gi
 
 app.use(cors()); // Enable CORS
 app.use(express.static("public")); // Handles requests to the html pages
+app.use(session({
+  secret: 'C<0TcVWd;dUg;^(tds]J5rj"GY<{w*', // random generated key
+  resave: false,
+  saveUninitialized: false
+}))
 
-// https://www.npmjs.com/package/steam-signin implement later for steam login?
+const realm = 'http://localhost:3000' // Update to actual domain this when in production
 
+const steamSignIn = new SteamSignIn(realm)
+
+//Route to initiate Steam Authenication
+app.get('/auth/steam', (req, res) => {
+  const returnUrl = `${realm}/auth/steam/return`;
+  const authUrl = steamSignIn.getUrl(returnUrl); // Get the Steam authentication URL
+  console.log('Generated Steam Auth URL:', authUrl);
+  res.redirect(authUrl); // Redirect user to Steam
+});
+
+// Route to handle the callback from Steam
+app.get('/auth/steam/return', async (req, res) => {
+  try {
+    // Verify the login and get the user's SteamID
+    const steamId = await steamSignIn.verifyLogin(req.url);
+    const steamId64 = steamId.getSteamID64(); // Get the 64-bit SteamID
+
+    // Store the SteamID in the session
+    req.session.steamId = steamId64;
+
+    // Redirect to a success page or homepage
+    res.redirect('/results.html');
+  } catch (error) {
+    console.error('Authentication failed:', error);
+    res.redirect('/login-failed'); // Redirect to an error page
+  }
+});
+
+// Example login failed route
+app.get('/login-failed', (req, res) => {
+  res.send('Authentication failed. Please try again.');
+});
+
+// No longer needing to pass in steamId from query
 app.get("/api/games", async (req, res) => {
-  const { steamid } = req.query;
+  // const { steamid } = req.query;
+  const steamid = req.session.steamId;
 
   if (!steamid) {
     res.status(400).send("Missing steamid parameter");

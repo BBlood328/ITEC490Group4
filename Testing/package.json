@@ -10,8 +10,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "node-fetch": "^2.6.7"
+    "express-session": "^1.18.1",
+    "node-fetch": "^2.6.7",
+    "steam-signin": "^1.0.5"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": []
 }
