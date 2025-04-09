@@ -38,7 +38,7 @@ app.get('/auth/steam/return', async (req, res) => {
     req.session.steamId = steamId64;
 
     // Redirect to a success page or homepage
-    res.redirect('/results.html');
+    res.redirect('/APITest.html');
   } catch (error) {
     console.error('Authentication failed:', error);
     res.redirect('/login-failed'); // Redirect to an error page
@@ -59,7 +59,6 @@ app.get("/api/games", async (req, res) => {
     res.status(400).send("Missing steamid parameter");
     return;
   }
-
   try {
     const response = await fetch(
       `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${apiKey}&steamid=${steamid}&include_appinfo=1&format=json`
@@ -117,6 +116,17 @@ app.get('/api/gameReviews', async (req, res) => {
         console.error('Error fetching game reviews:', error);
         res.status(500).json({ error: `Error fetching game reviews: ${error.message}` });
     }
+});
+
+app.get("/auth/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Error logging out");
+    } else{
+      res.redirect("/landingPage.html"); // Redirect to home page after logout
+    }
+  });
 });
 
 app.listen(3000, () => {

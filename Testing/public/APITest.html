@@ -20,15 +20,14 @@
 				<option value="playtime">Playtime</option>
 			</select> -->
 		</div>
+
+
+        <button id="logout" onclick="window.location.href='/auth/logout'">Logout</button>
+
 	</header>
 
 	<main>
         <h1>Steam API Test Page</h1>
-        <p>Enter your SteamID64 to fetch your games:</p>    
-        <div>
-            <label for="steamID">SteamID64:</label>
-            <input type="text" id="steamID" name="steamID" value="76561197998872013">
-        </div>
         <div>
             <label for="hoursPlayed">Include games with less than this many hours played:</label>
             <input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="5" step="1" oninput="updateHoursPlayedValue(this.value)">
