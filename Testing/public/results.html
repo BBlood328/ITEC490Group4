@@ -13,14 +13,22 @@
 			<h1>Steam API Test Page</h1>
     		<p>Enter your SteamID64 to fetch your games:</p>    
     		<div>
-        	<label for="steamID">SteamID64:</label>
-        	<input type="text" id="steamID" name="steamID" value="76561197998872013">
+        		<label for="steamID">SteamID64:</label>
+        		<input type="text" id="steamID" name="steamID" value="76561197998872013">
     		</div>
 			<div>
-			<label for="hoursPlayed">Include games with less than this many hours played:</label>
-			<input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="5" step="1" oninput="updateHoursPlayedValue(this.value)">
-			<span id="hoursPlayedValue">3</span>
+				<label for="hoursPlayed">Include games with less than this many hours played:</label>
+				<input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="5" step="1" oninput="updateHoursPlayedValue(this.value)">
+				<span id="hoursPlayedValue">3</span>
 			</div>
+			<h3>Recommendation Survey</h3>
+    		<p>Questions here</p>
+
+    		<button onclick="filterGames()">Reccomend Games</button>
+
+    		<h3>Recommended Backlog Games</h3>
+    		<div id="recommendedBacklog"><p>No recommended games to display yet.</p></div> <!-- The Complete Backlog List-->
+    		<button onclick="displayRecommendedBacklog()">Reroll</button>
 		</div>
 		<div class="sort-groups">
 			<label>Sort by:</label>
@@ -38,7 +46,7 @@
 		<div class="fetch-button">
 			<button onclick="fetchGames()" id="fetch">Fetch Games</button> 
 		</div>
-		<div id="gamesList"></div>
+		<div id="fullBacklog">No games to display yet.</div>
 	</main>
 </body>
 
