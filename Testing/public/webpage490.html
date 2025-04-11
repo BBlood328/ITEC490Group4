@@ -4,43 +4,242 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ITEC 490 Capstone Project: Group 1</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      body,
+      h1,
+      nav,
+      section {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      .header {
+        background-color: #e8000d;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 40px;
+      }
+
+      .main-content {
+        display: flex;
+        flex: 1;
+      }
+
+      .side-panel {
+        width: 200px;
+        background-color: #f1f1f1;
+        padding: 20px;
+      }
+
+      .left-panel {
+        margin-right: 10px;
+      }
+
+      .right-panel {
+        margin-left: 10px;
+        text-align: center;
+      }
+
+      nav {
+        background-color: #0051ba;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+      }
+
+      nav a {
+        color: white;
+        padding: 10px;
+        text-decoration: none;
+        margin: 0 15px;
+        font-size: 20px;
+      }
+
+      nav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .content img {
+        display: block;
+        margin: 20px auto;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .right-panel img {
+        width: 80%;
+        height: auto;
+        margin-bottom: 3px;
+        border-radius: 10px;
+      }
+
+      .right-panel p {
+        margin-top: 3px;
+        font-weight: bold;
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .footer-left {
+        text-align: left;
+        margin: 0;
+      }
+
+      .footer-right {
+        text-align: right;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <div class="header">
-        <h1>ITEC 490 Capstone Project: Group 1</h1>
+      <div
+        class="header"
+        style="
+          background-image: url('assets/images/campus.jpg');
+          background-size: cover;
+          background-position: center 45%;
+          color: white;
+          padding: 15px;
+          text-align: center;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 150px;
+        "
+      >
+        <img
+          src="assets/images/jayhawk.png"
+          alt="Jayhawk Logo"
+          style="width: auto; height: 130px; margin-left: 20px"
+        />
+        <h1 style="flex-grow: 1; text-align: center; margin: 0">
+          ITEC 490 Capstone Project
+        </h1>
+        <div
+          style="
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+          "
+        >
+          <img
+            src="assets/images/professionalstudies.png"
+            alt="Professional Studies"
+            style="width: auto; height: 130px"
+          />
+        </div>
       </div>
 
       <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Demonstration</a>
-        <a href="#">Timeline</a>
-        <a href="#">Sources</a>
-        <a href="#">The Team</a>
+        <a href="webpage490.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="poster.html">Poster</a>
+        <a href="whatwelearned.html">What We Learned</a>
+        <a href="contactus.html">Contact Us</a>
       </nav>
 
       <div class="main-content">
         <div class="side-panel left-panel">
-          <h3>Left</h3>
-          <p>ABC</p>
+          <h3>Capstone Information</h3>
+          <p>
+            <a href="https://ku.edu/" target="_blank">University of Kansas</a>
+          </p>
+          <p>
+            <a
+              href="https://catalog.ku.edu/professional-studies/"
+              target="_blank"
+              >ITEC 490 Capstone</a
+            >
+          </p>
+          <p>Spring 2025</p>
+          <p>
+            <a
+              href="https://edwardscampus.ku.edu/people/chris-seasholtz"
+              target="_blank"
+              >Professor Seasholtz</a
+            >
+          </p>
+          <p>
+            <a href="https://canvas.ku.edu/courses/151927" target="_blank"
+              >Group Capstone Project</a
+            >
+          </p>
         </div>
 
         <div class="content">
-          <h2>Welcome to [Captsone Project Name]</h2>
-          <p>ABC</p>
+          <h2>Steam API Backlog Game Recommender</h2>
+          <p>
+            The Gaming Backlog Recommendation Generator helps users decide what
+            to play next based on their Steam library, play history, and
+            personal preferences
+          </p>
+          <p>
+            Users log in with their Steam account, fill out a brief survey, and
+            receive a ranked game recommendation list
+          </p>
+          <p>
+            The app provides direct links to game pages and allows users to
+            refresh their recommendations
+          </p>
+          <p>
+            We will put a screenshot/GIF of the programs page in place of the
+            poster.
+          </p>
+          <img src="assets/images/poster.jpg" alt="Capstone Poster" />
         </div>
 
         <div class="side-panel right-panel">
-          <h3>Group 1 Members (Last Name):</h3>
-          <p>Omar Ayesh</p>
-          <p>Brian Blood</p>
-          <p>Jake Galligan</p>
-          <p>Jacki Liu</p>
-          <p>Alexander Timmerman</p>
+          <h3>Group 1 Members:</h3>
+          <div>
+            <img src="assets/images/omar.jpg" alt="Omar Ayesh" />
+            <p>Omar Ayesh</p>
+          </div>
+          <div>
+            <img src="assets/images/brian.jpg" alt="Brian Blood" />
+            <p>Brian Blood</p>
+          </div>
+          <div>
+            <img src="assets/images/jake.jpg" alt="Jake Galligan" />
+            <p>Jake Galligan</p>
+          </div>
+          <div>
+            <img src="assets/images/jacki.jpg" alt="Jacki Liu" />
+            <p>Jacki Liu</p>
+          </div>
+          <div>
+            <img src="assets/images/alexander.jpg" alt="Alexander Timmerman" />
+            <p>Alexander Timmerman</p>
+          </div>
         </div>
       </div>
     </div>
+    <footer>
+      <p>&copy; 2025 ITEC 490 Capstone Group 1</p>
+      <p>Last Updated 04-11-2025</p>
+    </footer>
   </body>
 </html>
