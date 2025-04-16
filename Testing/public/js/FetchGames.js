@@ -4,40 +4,40 @@ let storedGames = []; // Global array to store game data
 
 // Function to fetch games data
 async function fetchGames() {
-  // const steamId = document.getElementById('steamID').value;
-  const hoursPlayedValue = parseInt(
-    document.getElementById("hoursPlayed").value,
-    10
-  );
-
-  // if (!steamId) {
-  //     alert('Please enter your SteamID64.');
-  //     return;
-  // }
+  const hoursPlayedValue = parseInt(document.getElementById("hoursPlayed").value, 10);
+  const reviewScoreValue = parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
 
   try {
     const response = await fetch(`http://localhost:3000/api/games`);
     const data = await response.json();
 
-    // Store game data in the global array, filtering by playtime
+    // Store game data in the global array, filtering by playtime and review ratio
     storedGames = await Promise.all(
       data.response.games
-        .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter games
+        .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter by playtime
         .map(async (game) => {
           const reviewRatio = await fetchGameReviews(game.appid); // Fetch review ratio
-          return {
-            name: game.name,
-            appid: game.appid,
-            playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
-            reviewRatio: reviewRatio || 0, // Default to 0 if no review data
-          };
+          if (reviewRatio >= reviewScoreValue) { // Filter by review ratio
+            return {
+              name: game.name,
+              appid: game.appid,
+              playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
+              reviewRatio: reviewRatio,
+            };
+          }
+          return null; // Doesnt meet the criteria, returns null
         })
     );
 
+    storedGames = storedGames.filter((game) => game !== null); // Remove null values from the array
+
     console.log("Stored Games with Reviews:", storedGames); // Log the stored games for debugging
 
-    // Display the games in a dynamic table
-    displayFullBacklog();
+
+    //TODO Either fetch game details all at once here using seperate function, or add to array such as with fetchGameReviews & reviewRatio
+
+
+    displayFullBacklog(); // Display the games in the full backlog table
   } catch (error) {
     console.error("Error fetching games data:", error);
   }
@@ -134,7 +134,12 @@ function displayFullBacklog() {
   gamesList.appendChild(table);
 }
 
-// Function to update the displayed value of the hoursPlayed slider
+// Updates the displayed value of the hoursPlayed slider
 function updateHoursPlayedValue(value) {
   document.getElementById("hoursPlayedValue").textContent = value;
+}
+
+// Updates the displayed value of the reviewScore slider
+function updateReviewScoreValue(value) {
+  document.getElementById("reviewScoreValue").textContent = value;
 }
