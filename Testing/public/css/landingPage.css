@@ -1,62 +1,66 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-    text-align: center;
+  text-align: center;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 h1 {
-    margin: 0;
+  margin: 0;
 }
 
 nav {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 nav a {
-    margin-left: 15px;
-    text-decoration: none;
-    color: blue;
+  margin-left: 15px;
+  text-decoration: none;
+  color: blue;
 }
 
 main {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 p {
-    font-size: 1.2em;
-    font-weight: bold;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 input {
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 1.2em;
-    width: 250px;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1.2em;
+  width: 250px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    background-color: lightgray;
-    border: none;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: lightgray;
+  border: none;
+  cursor: pointer;
 }
