@@ -1,18 +1,23 @@
 /* Alexander Timmerman 3-16-2025 */
 
 body {  
-        background-color: rgb(38, 49, 64);
+        background-color: rgb(72, 91, 113);
         margin: 0%;
+        font-family: "Motiva Sans", sans-serif;
 }
 
 header {
-        background-color: rgb(72, 91, 113);
+        background-color: rgb(50, 72, 103);
         font-size: large;
         display: grid;
-        padding: 10px 0;
+        padding: 10px 20px;
         grid-template-rows: auto;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 75% 25%;
         
+}
+
+main {
+        padding: 10px 20px;
 }
 
 table   {
@@ -48,6 +53,27 @@ button {
 .fetch-button {
         width: 20%;
         margin: auto;
+}
+
+.sliders {
+        width: 90%;
+        margin: auto;
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: 50% 50%;
+}
+
+.sliders div {
+        margin: auto;
+        font-size: 24px;
+}
+
+.subsection {
+        text-align: center;
+}
+
+.subsection h3 {
+        font-size: 24px;
 }
 
 #fetch {
