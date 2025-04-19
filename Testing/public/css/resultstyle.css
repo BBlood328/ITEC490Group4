@@ -17,8 +17,20 @@ header {
         display: grid;
         padding: 10px 20px;
         grid-template-rows: auto;
-        grid-template-columns: 15% 70% 15%;
+        grid-template-columns: 15% 70% 7.5% 7.5%;
         
+}
+
+
+
+header button {
+        margin: auto;
+        padding: 5px 15px;
+        background-color: black;
+        color: white;
+        font-size: 24px;
+        border: none;
+        border-radius: 15px;
 }
 
 main {
@@ -51,6 +63,28 @@ button {
         margin: 10px;
         cursor: pointer;
 }
+
+.help {
+        position: relative;
+}
+
+.help .helptext {
+        visibility: hidden;
+        position: absolute;
+        background-color: black;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 18px;
+        z-index: 1;
+        width: 400px;
+        top: 125%;
+        left: 50%;
+        margin-left: -200px;
+}
+
+.help:hover .helptext {
+        visibility: visible;
+      }
 
 .dataentry {
         margin-left: 2%;
@@ -112,14 +146,4 @@ button {
         background-color: rgb(19, 26, 34);
         border-color: rgb(0, 0, 0);
         border-radius: 10px;
-}
-
-#logout {
-        margin: auto;
-        padding: 5px 15px;
-        background-color: black;
-        color: white;
-        font-size: 24px;
-        border: none;
-        border-radius: 15px;
 }
