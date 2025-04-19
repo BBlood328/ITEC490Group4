@@ -1,18 +1,23 @@
 /* Alexander Timmerman 3-16-2025 */
 
+html {
+        height: 100%;
+        background: linear-gradient(180deg,rgba(72, 91, 113, 1) 0%, rgba(24, 32, 38, 1) 100%) no-repeat;
+}
+
 body {  
-        background-color: rgb(72, 91, 113);
         margin: 0%;
         font-family: "Motiva Sans", sans-serif;
 }
 
 header {
         background-color: rgb(50, 72, 103);
-        font-size: large;
+        font-size: 26px;
+        text-align: center;
         display: grid;
         padding: 10px 20px;
         grid-template-rows: auto;
-        grid-template-columns: 75% 25%;
+        grid-template-columns: 15% 70% 15%;
         
 }
 
@@ -44,6 +49,7 @@ td:first-child, th:first-child {
 
 button {
         margin: 10px;
+        cursor: pointer;
 }
 
 .dataentry {
@@ -55,7 +61,7 @@ button {
         margin: auto;
 }
 
-.sliders {
+.preference-sliders {
         width: 90%;
         margin: auto;
         display: grid;
@@ -63,9 +69,32 @@ button {
         grid-template-columns: 50% 50%;
 }
 
-.sliders div {
+.preference-sliders div {
+        display: flex;
+        justify-content: center;
+        width: 75%;
+        background-color: rgb(26, 33, 42);
+        border-radius: 10px;
+        padding: 5px 15px;
         margin: auto;
+        color: rgb(209, 229, 250);
         font-size: 24px;
+}
+
+.slider {
+        appearance: none;
+        height: 10px;
+        border-radius: 10px;
+        background: #6b6b6b;
+        margin: auto 0px;
+}
+
+.slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 10px;
+        height: 20px;
+        background: rgb(61, 76, 97);
+        cursor: pointer;
 }
 
 .subsection {
@@ -83,4 +112,14 @@ button {
         background-color: rgb(19, 26, 34);
         border-color: rgb(0, 0, 0);
         border-radius: 10px;
+}
+
+#logout {
+        margin: auto;
+        padding: 5px 15px;
+        background-color: black;
+        color: white;
+        font-size: 24px;
+        border: none;
+        border-radius: 15px;
 }
