@@ -4,8 +4,12 @@ let storedGames = []; // Global array to store game data
 
 // Function to fetch games data
 async function fetchGames() {
-  const hoursPlayedValue = parseInt(document.getElementById("hoursPlayed").value, 10);
-  const reviewScoreValue = parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
+  const hoursPlayedValue = parseInt(
+    document.getElementById("hoursPlayed").value,
+    10
+  );
+  const reviewScoreValue =
+    parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
 
   try {
     const response = await fetch(`http://localhost:3000/api/games`);
@@ -13,11 +17,12 @@ async function fetchGames() {
 
     // Store game data in the global array, filtering by playtime and review ratio
     storedGames = await Promise.all(
-      data.response.games
+      (data.response.games || [])
         .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter by playtime
         .map(async (game) => {
           const reviewRatio = await fetchGameReviews(game.appid); // Fetch review ratio
-          if (reviewRatio >= reviewScoreValue) { // Filter by review ratio
+          if (reviewRatio >= reviewScoreValue) {
+            // Filter by review ratio
             return {
               name: game.name,
               appid: game.appid,
@@ -33,9 +38,7 @@ async function fetchGames() {
 
     console.log("Stored Games with Reviews:", storedGames); // Log the stored games for debugging
 
-
     //TODO Either fetch game details all at once here using seperate function, or add to array such as with fetchGameReviews & reviewRatio
-
 
     displayFullBacklog(); // Display the games in the full backlog table
   } catch (error) {
