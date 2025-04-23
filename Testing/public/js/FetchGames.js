@@ -141,13 +141,18 @@ function displayFullBacklog() {
 
   // Create table header
   const headerRow = document.createElement("tr");
-  ["Name", "Rating (%)", "Genres", "Price", "Playtime (hrs)"].forEach((headerText) => {
+  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach((headerText) => {
     const th = document.createElement("th");
     th.textContent = headerText;
     headerRow.appendChild(th);
   });
   table.appendChild(headerRow);
 
+
+  //TODO MAKE HEADERS CLICKABLE WITH SORTING https://www.w3schools.com/howto/howto_js_sort_table.asp 
+
+
+  // name, genre, price, playtime, rating
   // Populate table rows with game data
   storedGames.forEach((game) => {
     const row = document.createElement("tr");
@@ -161,11 +166,6 @@ function displayFullBacklog() {
     nameCell.appendChild(link);
     row.appendChild(nameCell);
 
-    // Create a cell for the % Rating
-    const reviewCell = document.createElement("td");
-    reviewCell.textContent = Math.round(game.reviewRatio * 100) + "%"; // Convert to percentage and round
-    row.appendChild(reviewCell);
-
     // Create a cell for the genres
     const genresCell = document.createElement("td");
     genresCell.textContent = game.genres.join(", "); //Separate genres with a comma
@@ -178,8 +178,13 @@ function displayFullBacklog() {
 
     // Create a cell for the playtime
     const playtimeCell = document.createElement("td");
-    playtimeCell.textContent = game.playtime;
+    playtimeCell.textContent = game.playtime + " hrs";
     row.appendChild(playtimeCell);
+
+    // Create a cell for the % Rating
+    const reviewCell = document.createElement("td");
+    reviewCell.textContent = Math.round(game.reviewRatio * 100) + "%"; // Convert to percentage and round
+    row.appendChild(reviewCell);
 
     table.appendChild(row);
   });

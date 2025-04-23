@@ -118,6 +118,9 @@ app.get('/api/gameReviews', async (req, res) => {
     }
 });
 
+
+//TODO DISPLAY PROFILE NAME IN HEADER https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0002.29
+
 app.get("/auth/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
