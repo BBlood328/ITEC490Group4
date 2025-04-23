@@ -18,19 +18,22 @@ header {
         display: grid;
         padding: 10px 20px;
         grid-template-rows: auto;
-        grid-template-columns: 15% 70% 5% 5% 5%;
+        grid-template-columns: 15% 70% 15%;
 }
 
 
 
 header button {
-        margin: auto;
         padding: 5px 15px;
         background-color: black;
         color: white;
         font-size: 24px;
         border: none;
         border-radius: 15px;
+}
+
+header div {
+        margin: auto;
 }
 
 main {
@@ -64,10 +67,15 @@ td:nth-child(2), th:nth-child(2) {
         width: 25%;
 }
 
+td:nth-child(n+4) {
+        text-align: center;
+}
+
 button {
         margin: 10px;
         cursor: pointer;
 }
+
 
 .help {
         position: relative;
