@@ -2,7 +2,7 @@
 
 let storedGames = []; // Global array to store game data
 
-// Function to fetch games data
+// Fetch games data
 async function fetchGames() {
   const hoursPlayedValue = parseInt(
     document.getElementById("hoursPlayed").value,
@@ -21,24 +21,28 @@ async function fetchGames() {
         .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter by playtime
         .map(async (game) => {
           const reviewRatio = await fetchGameReviews(game.appid); // Fetch review ratio
+
           if (reviewRatio >= reviewScoreValue) {
-            // Filter by review ratio
-            return {
-              name: game.name,
-              appid: game.appid,
-              playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
-              reviewRatio: reviewRatio,
-            };
+            const details = await fetchGameDetails(game.appid); // Fetch additional details
+
+            if (details) { // Details are not null
+              return {
+                name: game.name,
+                appid: game.appid,
+                playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
+                reviewRatio: reviewRatio,
+                price: details.price,
+                genres: details.genres,
+              };
+            }
           }
-          return null; // Doesnt meet the criteria, returns null
+          return null; // Does not meet the criteria
         })
     );
 
     storedGames = storedGames.filter((game) => game !== null); // Remove null values from the array
 
-    console.log("Stored Games with Reviews:", storedGames); // Log the stored games for debugging
-
-    //TODO Either fetch game details all at once here using seperate function, or add to array such as with fetchGameReviews & reviewRatio
+    console.log("Stored Games:", storedGames); // Log the stored games array for debugging
 
     displayFullBacklog(); // Display the games in the full backlog table
   } catch (error) {
@@ -46,7 +50,7 @@ async function fetchGames() {
   }
 }
 
-// Function to fetch game reviews
+// Fetch game reviews
 async function fetchGameReviews(appid) {
   if (!appid) {
     console.error("Missing appid parameter for fetching reviews.");
@@ -61,18 +65,44 @@ async function fetchGameReviews(appid) {
 
     const { total_positive, total_reviews } = data.query_summary;
     const ratio = total_positive / (total_reviews || 1); // Avoid division by zero
+
     if (ratio == 1 || ratio == 0) {
-      return null; // Return null if the ratio is 1 or 0
+      return null; // Return null if the ratio is invalid
     }
 
-    return ratio; // Return the ratio
+    return ratio;
   } catch (error) {
     console.error("Error fetching game reviews:", error);
     return null;
   }
 }
 
-// TODO add fetchGameDetails() fetch and add game details to storedGames and the dynamic table
+// Fetch game details (price and genres)
+async function fetchGameDetails(appid) {
+  if (!appid) {
+    console.error("Missing appid parameter for fetching game details.");
+    return null;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/gameDetails?appid=${appid}`);
+    const data = await response.json();
+
+    const appData = data[appid]?.data;
+    if (!appData) {
+      console.error(`No data found for appid: ${appid}`);
+      return null;
+    }
+
+    const price = appData.price_overview?.final_formatted || "Free";
+    const genres = appData.genres?.map((genre) => genre.description) || [];
+
+    return { price, genres };
+  } catch (error) {
+    console.error("Error fetching game details:", error);
+    return null;
+  }
+}
 
 // TODO add filterGames() filter the storedGames array by user survey inputs and copy them to a clean filteredStoredGames array
 function filterGames() {
@@ -85,22 +115,33 @@ function displayRecommendedBacklog() {
   // Display a few games picked at random from the filteredStoredGames array
 }
 
-// Function to display the full backlog
+// Display the full backlog
 function displayFullBacklog() {
-  const gamesList = document.getElementById("fullBacklog");
+  const backlogStats = document.getElementById("backlogStats"); // Stats element
+  const gamesList = document.getElementById("fullBacklog"); // Table element
   gamesList.innerHTML = ""; // Clear previous content
 
   if (storedGames.length === 0) {
     gamesList.textContent = "No games to display yet.";
+    backlogStats.textContent = "0 Games | Total Price (MSRP): $0.00";
     return;
   }
+
+  // Calculate total price
+  const totalPrice = storedGames.reduce((sum, game) => {
+    const price = parseFloat(game.price.replace(/[^0-9.-]+/g, "")) || 0; // Extract numeric value from price
+    return sum + price;
+  }, 0);
+
+  // Update backlog stats
+  backlogStats.textContent = `${storedGames.length} Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
 
   // Create a table
   const table = document.createElement("table");
 
   // Create table header
   const headerRow = document.createElement("tr");
-  ["Name", "Playtime (hours)", "Rating (%)"].forEach((headerText) => {
+  ["Name", "Rating (%)", "Genres", "Price", "Playtime (hrs)"].forEach((headerText) => {
     const th = document.createElement("th");
     th.textContent = headerText;
     headerRow.appendChild(th);
@@ -120,21 +161,30 @@ function displayFullBacklog() {
     nameCell.appendChild(link);
     row.appendChild(nameCell);
 
-    // Create a cell for the playtime
-    const playtimeCell = document.createElement("td");
-    playtimeCell.textContent = game.playtime;
-    row.appendChild(playtimeCell);
-
     // Create a cell for the % Rating
     const reviewCell = document.createElement("td");
     reviewCell.textContent = Math.round(game.reviewRatio * 100) + "%"; // Convert to percentage and round
     row.appendChild(reviewCell);
 
+    // Create a cell for the genres
+    const genresCell = document.createElement("td");
+    genresCell.textContent = game.genres.join(", "); //Separate genres with a comma
+    row.appendChild(genresCell);
+
+    // Create a cell for the price
+    const priceCell = document.createElement("td");
+    priceCell.textContent = game.price;
+    row.appendChild(priceCell);
+
+    // Create a cell for the playtime
+    const playtimeCell = document.createElement("td");
+    playtimeCell.textContent = game.playtime;
+    row.appendChild(playtimeCell);
+
     table.appendChild(row);
   });
 
-  // Append the table to the gamesList div
-  gamesList.appendChild(table);
+  gamesList.appendChild(table);   // Append the table to the gamesList div
 }
 
 // Updates the displayed value of the hoursPlayed slider

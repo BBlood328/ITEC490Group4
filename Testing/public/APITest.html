@@ -30,7 +30,7 @@
             </div>
             
             <div>
-            <label for="reviewScore">Minimum Percentage Review Score:</label>
+            <label for="reviewScore">Minimum Review Score:</label>
             &nbsp<input type="range" id="reviewScore" name="reviewScore" min="70" max="90" step="10" value="80" class="slider" oninput="updateReviewScoreValue(this.value)">
             &nbsp<span id="reviewScoreValue">80</span>%
             </div>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="subsection">
-            <h3>Full Backlog Games</h3>
+            <h3>Full Backlog<div id="backlogStats">0 Games | Total Price (MSRP): $0.00</div> </h3> 
 		    <div id="fullBacklog">No games to display yet.</div>
         </div>
 	</main>
