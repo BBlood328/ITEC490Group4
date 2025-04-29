@@ -4,7 +4,7 @@
 
 ```
 cd ITEC490Group4/Testing
-npm start
+npm run dev
 ```
 
 ## UI Mockups
