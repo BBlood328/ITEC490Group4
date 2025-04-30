@@ -22,7 +22,6 @@ async function fetchGames() {
       (data.response.games || [])
         .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter by playtime
         .map(async (game) => {
-
           const reviewRatio = await fetchGameReviews(game.appid);
           if (reviewRatio === null || reviewRatio < reviewScoreValue) {
             return null;
@@ -67,7 +66,9 @@ async function fetchGameReviews(appid) {
       `http://localhost:3000/api/gameReviews?appid=${appid}`
     );
     if (!response.ok) {
-      console.error(`HTTP error while fetching reviews for appid ${appid}: ${response.status}`);
+      console.error(
+        `HTTP error while fetching reviews for appid ${appid}: ${response.status}`
+      );
       return null; // Return null if an HTTP error occurs
     }
     const data = await response.json();
@@ -98,7 +99,9 @@ async function fetchGameDetails(appid) {
       `http://localhost:3000/api/gameDetails?appid=${appid}`
     );
     if (!response.ok) {
-      console.warn(`HTTP error while fetching details for appid ${appid}: ${response.status}`);
+      console.warn(
+        `HTTP error while fetching details for appid ${appid}: ${response.status}`
+      );
       return null;
     }
     const data = await response.json();
@@ -149,20 +152,24 @@ function displayFullBacklog() {
   }, 0);
 
   // Update backlog stats
-  backlogStats.textContent = `${storedGames.length} Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
+  backlogStats.textContent = `${
+    storedGames.length
+  } Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
 
   // Create a table
   const table = document.createElement("table");
 
   // Create table header
   const headerRow = document.createElement("tr");
-  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach((headerText, index) => {
-    const th = document.createElement("th");
-    th.textContent = headerText;
-    th.style.cursor = "pointer";
-    th.onclick = () => sortTable(index); // Add sorting functionality
-    headerRow.appendChild(th);
-  });
+  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach(
+    (headerText, index) => {
+      const th = document.createElement("th");
+      th.textContent = headerText;
+      th.style.cursor = "pointer";
+      th.onclick = () => sortTable(index); // Add sorting functionality
+      headerRow.appendChild(th);
+    }
+  );
   table.appendChild(headerRow);
 
   // Populate table rows with game data
@@ -209,7 +216,8 @@ function sortTable(columnIndex) {
   const table = document.querySelector("#fullBacklog table");
   const rows = Array.from(table.rows).slice(1); // Exclude header row
 
-  const isNumericColumn = columnIndex === 2 || columnIndex === 3 || columnIndex === 4; // Price, Playtime, Rating
+  const isNumericColumn =
+    columnIndex === 2 || columnIndex === 3 || columnIndex === 4; // Price, Playtime, Rating
   const isAscending = table.dataset.sortOrder !== "asc";
 
   rows.sort((a, b) => {
@@ -217,11 +225,19 @@ function sortTable(columnIndex) {
     const cellB = b.cells[columnIndex].textContent.trim();
 
     if (isNumericColumn) {
-      const valueA = columnIndex === 2 && cellA === "Free" ? 0 : parseFloat(cellA.replace(/[^0-9.-]+/g, ""));
-      const valueB = columnIndex === 2 && cellB === "Free" ? 0 : parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
+      const valueA =
+        columnIndex === 2 && cellA === "Free"
+          ? 0
+          : parseFloat(cellA.replace(/[^0-9.-]+/g, ""));
+      const valueB =
+        columnIndex === 2 && cellB === "Free"
+          ? 0
+          : parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
       return isAscending ? valueA - valueB : valueB - valueA;
     } else {
-      return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+      return isAscending
+        ? cellA.localeCompare(cellB)
+        : cellB.localeCompare(cellA);
     }
   });
 
@@ -260,15 +276,7 @@ function updateReviewScoreValue(value) {
 }
 
 function displayLoadingSpinner() {
-  // dotted loader
-  document.getElementById("fullBacklog").innerHTML =
-    '<span class="loader"></span>';
-
   // 3 bars loader
-  // document.getElementById("fullBacklog").innerHTML =
-  //   '<div class="lds-bars"><div></div><div></div><div></div></div>';
-
-  // ring loader
-  // document.getElementById("fullBacklog").innerHTML =
-  //   '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
+  document.getElementById("fullBacklog").innerHTML =
+    '<div class="lds-bars"><div></div><div></div><div></div></div>';
 }
