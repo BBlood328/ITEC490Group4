@@ -40,10 +40,7 @@ header div {
   margin: auto;
 }
 
-/* Player Profile, brians rough implementation
-Probably needs to be fixed to fit better at 1080p (maybe easier to shrink title more),
-Should be closer to the edge of the screen matching the buttons on right.
-Test with longer usernames */
+/* Player Profile, brians rough implementation, should probably start closer to the edge of the screen like the buttons on the right. and if window is narrow the title should go above the other two divs (if possible not a huge deal) */
 #playerProfile
 {
         display: flex;

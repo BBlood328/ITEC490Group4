@@ -22,24 +22,25 @@ async function fetchGames() {
       (data.response.games || [])
         .filter((game) => game.playtime_forever / 60 < hoursPlayedValue) // Filter by playtime
         .map(async (game) => {
-          const reviewRatio = await fetchGameReviews(game.appid); // Fetch review ratio
 
-          if (reviewRatio >= reviewScoreValue) {
-            const details = await fetchGameDetails(game.appid); // Fetch additional details
+          const reviewRatio = await fetchGameReviews(game.appid);
+          if (reviewRatio === null || reviewRatio < reviewScoreValue) {
+            return null;
+          } // Exclude games with invalid review ratio or a fetch error
 
-            if (details) {
-              // Details are not null
-              return {
-                name: game.name,
-                appid: game.appid,
-                playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
-                reviewRatio: reviewRatio,
-                price: details.price,
-                genres: details.genres,
-              };
-            }
-          }
-          return null; // Does not meet the criteria
+          const details = await fetchGameDetails(game.appid);
+          if (details == null) {
+            return null; // Return null if details are not available
+          } // Exclude games with invalid details or a fetch error
+
+          return {
+            name: game.name,
+            appid: game.appid,
+            playtime: (game.playtime_forever / 60).toFixed(1), // Convert minutes to hours
+            reviewRatio: reviewRatio !== null ? reviewRatio : "N/A", // Use "N/A" if review ratio is unavailable
+            price: details.price,
+            genres: details.genres,
+          };
         })
     );
 
@@ -58,13 +59,17 @@ async function fetchGames() {
 async function fetchGameReviews(appid) {
   if (!appid) {
     console.error("Missing appid parameter for fetching reviews.");
-    return;
+    return null; // Return null if appid is missing
   }
 
   try {
     const response = await fetch(
       `http://localhost:3000/api/gameReviews?appid=${appid}`
     );
+    if (!response.ok) {
+      console.error(`HTTP error while fetching reviews for appid ${appid}: ${response.status}`);
+      return null; // Return null if an HTTP error occurs
+    }
     const data = await response.json();
 
     const { total_positive, total_reviews } = data.query_summary;
@@ -76,8 +81,8 @@ async function fetchGameReviews(appid) {
 
     return ratio;
   } catch (error) {
-    console.error("Error fetching game reviews:", error);
-    return null;
+    console.error(`Error fetching game reviews for appid ${appid}:`, error);
+    return null; // Return null if an exception occurs
   }
 }
 
@@ -85,13 +90,17 @@ async function fetchGameReviews(appid) {
 async function fetchGameDetails(appid) {
   if (!appid) {
     console.error("Missing appid parameter for fetching game details.");
-    return null;
+    return { price: "Unknown", genres: ["Unknown"] }; // Default values if appid is missing
   }
 
   try {
     const response = await fetch(
       `http://localhost:3000/api/gameDetails?appid=${appid}`
     );
+    if (!response.ok) {
+      console.warn(`HTTP error while fetching details for appid ${appid}: ${response.status}`);
+      return null;
+    }
     const data = await response.json();
 
     const appData = data[appid]?.data;
@@ -105,8 +114,8 @@ async function fetchGameDetails(appid) {
 
     return { price, genres };
   } catch (error) {
-    console.error("Error fetching game details:", error);
-    return null;
+    console.error(`Error fetching game details for appid ${appid}:`, error);
+    return null; // Default values if an exception occurs
   }
 }
 
@@ -140,25 +149,22 @@ function displayFullBacklog() {
   }, 0);
 
   // Update backlog stats
-  backlogStats.textContent = `${
-    storedGames.length
-  } Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
+  backlogStats.textContent = `${storedGames.length} Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
 
   // Create a table
   const table = document.createElement("table");
 
   // Create table header
   const headerRow = document.createElement("tr");
-  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach((headerText) => {
+  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach((headerText, index) => {
     const th = document.createElement("th");
     th.textContent = headerText;
+    th.style.cursor = "pointer";
+    th.onclick = () => sortTable(index); // Add sorting functionality
     headerRow.appendChild(th);
   });
   table.appendChild(headerRow);
 
-  //TODO MAKE HEADERS CLICKABLE WITH SORTING https://www.w3schools.com/howto/howto_js_sort_table.asp
-
-  // name, genre, price, playtime, rating
   // Populate table rows with game data
   storedGames.forEach((game) => {
     const row = document.createElement("tr");
@@ -174,7 +180,7 @@ function displayFullBacklog() {
 
     // Create a cell for the genres
     const genresCell = document.createElement("td");
-    genresCell.textContent = game.genres.join(", "); //Separate genres with a comma
+    genresCell.textContent = game.genres.join(", "); // Separate genres with a comma
     row.appendChild(genresCell);
 
     // Create a cell for the price
@@ -184,7 +190,7 @@ function displayFullBacklog() {
 
     // Create a cell for the playtime
     const playtimeCell = document.createElement("td");
-    playtimeCell.textContent = game.playtime + " hrs";
+    playtimeCell.textContent = game.playtime + "hrs";
     row.appendChild(playtimeCell);
 
     // Create a cell for the % Rating
@@ -196,6 +202,31 @@ function displayFullBacklog() {
   });
 
   gamesList.appendChild(table); // Append the table to the gamesList div
+}
+
+// Sort the table by column index
+function sortTable(columnIndex) {
+  const table = document.querySelector("#fullBacklog table");
+  const rows = Array.from(table.rows).slice(1); // Exclude header row
+
+  const isNumericColumn = columnIndex === 2 || columnIndex === 3 || columnIndex === 4; // Price, Playtime, Rating
+  const isAscending = table.dataset.sortOrder !== "asc";
+
+  rows.sort((a, b) => {
+    const cellA = a.cells[columnIndex].textContent.trim();
+    const cellB = b.cells[columnIndex].textContent.trim();
+
+    if (isNumericColumn) {
+      const valueA = columnIndex === 2 && cellA === "Free" ? 0 : parseFloat(cellA.replace(/[^0-9.-]+/g, ""));
+      const valueB = columnIndex === 2 && cellB === "Free" ? 0 : parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
+      return isAscending ? valueA - valueB : valueB - valueA;
+    } else {
+      return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+    }
+  });
+
+  rows.forEach((row) => table.appendChild(row)); // Re-append rows in sorted order
+  table.dataset.sortOrder = isAscending ? "asc" : "desc"; // Toggle sort order
 }
 
 // Fetch player profile and update header
