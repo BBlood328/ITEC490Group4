@@ -4,28 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Steam Gaming Backlog</title>
-    <link rel="stylesheet" href="./css/landingPage.css" />
+    <link rel="stylesheet" href="./css/backlogstyle.css" />
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1>Steam Gaming Backlog</h1>
-        <nav>
-          <a href="webpage490.html" target="blank">About</a>
-          <!-- <a href="#">Sign in</a> -->
-          <!-- <a href="#">Sign up</a> -->
-        </nav>
-      </header>
+    <header>
+      <img src="./assets/images/steam-logo.png" alt="Steam Logo" style="width: auto; height: 130px;">
+      <div> 
+          <h1>Steam Backlog Recommendation Generator</h1> 
+      </div>
+
+      <div>
+          <button class="help">Help
+              <span class="helptext">
+              <h3>FaQ</h3>
+              <p>Q: Why aren't my games showing up</p>
+              </span>
+          </button>
+          <button id="about" onclick="window.open('webpage490.html', '_blank')">About</button>
+      </div>
+  </header>
       <main>
-        <p>Login via Steam</p>
-        <!-- <input type="text" placeholder="Username"> -->
-        <a href="/auth/steam">
-          <img
+        <div class="subsection">
+          <h3>Login via Steam</h3>
+          <!-- <input type="text" placeholder="Username"> -->
+          <a href="/auth/steam">
+            <img
             src="./assets/images/steam-button-long.png"
             alt="Sign in with Steam"
-          />
-        </a>
+            />
+          </a>
+        </div>
+        
       </main>
-    </div>
   </body>
 </html>

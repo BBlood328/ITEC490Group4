@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link href="./css/resultstyle.css" rel="stylesheet" />
+    <link href="./css/backlogstyle.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Test</title>
     <script src="./js/FetchGames.js" defer></script>
@@ -65,22 +65,25 @@
         </div>
       </div>
 
-      <div class="fetch-button">
+      <div class="submit-button">
         <button onclick="fetchGames()" id="fetch">Fetch Games</button> 
       </div>
 
-      <div class="subsection">
+      <div class="recommendedsurvey">
         <h3>Recommendation Survey</h3>
         <p>Questions here</p>
-        <button onclick="filterGames()">Reccomend Games</button>
+      </div>
+
+      <div class="submit-button">
+        <button onclick="filterGames()" id="recommend">Recommend Games</button>
       </div>
 
       <div class="subsection">
         <h3>Recommended Backlog Games</h3>
+        <button onclick="displayRecommendedBacklog()" id="reroll">Reroll</button>
         <div id="recommendedBacklog">
-          <p>No recommended games to display yet.</p>
+          <p>Fill out the survey to view recommended games.</p>
         </div>
-        <button onclick="displayRecommendedBacklog()">Reroll</button>
       </div>
 
       <div class="subsection">
