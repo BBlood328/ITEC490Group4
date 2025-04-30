@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-	<link href="./css/resultstyle.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="./css/resultstyle.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Test</title>
     <script src="./js/FetchGames.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
         <!--Old Steam Logo  <img src="./assets/images/steam-logo.png" alt="Steam Logo" style="width: auto; height: 130px;"> -->
         <div id="playerProfile">
@@ -18,40 +18,74 @@
         <div> 
             <h1>Steam Backlog Recommendation Generator</h1> 
         </div>
+        <div>
+        <button class="help">
+          Help
+          <span class="helptext">
+            <h3>FaQ</h3>
+            <p>Q: Why aren't my games showing up</p>
+          </span>
+        </button>
+        <button id="about" onclick="window.open('webpage490.html', '_blank')">
+          About
+        </button>
+        <button id="logout" onclick="window.location.href='/auth/logout'">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div class="preference-sliders">
+        <div>
+          <label for="hoursPlayed">Maximum Hours Played:</label>
+          &nbsp<input
+            type="range"
+            id="hoursPlayed"
+            name="hoursPlayed"
+            min="1"
+            max="3"
+            step="1"
+            class="slider"
+            oninput="updateHoursPlayedValue(this.value)"
+          />
+          &nbsp<span id="hoursPlayedValue">2</span>
+        </div>
 
         <div>
-            <button class="help">Help
-                <span class="helptext">
-                    <h3>FaQ</h3>
-                    <p>Q: Why aren't my games showing up</p>
-                </span>
-            </button>
-            <button id="about" onclick="window.open('webpage490.html', '_blank')">About</button>
-            <button id="logout" onclick="window.location.href='/auth/logout'">Logout</button>
+          <label for="reviewScore">Minimum Review Score:</label>
+          &nbsp<input
+            type="range"
+            id="reviewScore"
+            name="reviewScore"
+            min="70"
+            max="90"
+            step="10"
+            value="80"
+            class="slider"
+            oninput="updateReviewScoreValue(this.value)"
+          />
+          &nbsp<span id="reviewScoreValue">80</span>%
         </div>
+      </div>
 
-	</header>
+      <div class="subsection">
+        <h3>Recommendation Survey</h3>
+        <p>Questions here</p>
+        <button onclick="filterGames()">Reccomend Games</button>
+      </div>
 
-	<main>
-        <div class="preference-sliders">
-            <div>
-            <label for="hoursPlayed">Maximum Hours Played:</label>
-            &nbsp<input type="range" id="hoursPlayed" name="hoursPlayed" min="1" max="3" step="1" class="slider" oninput="updateHoursPlayedValue(this.value)">
-            &nbsp<span id="hoursPlayedValue">2</span>
-            </div>
-            
-            <div>
-            <label for="reviewScore">Minimum Review Score:</label>
-            &nbsp<input type="range" id="reviewScore" name="reviewScore" min="70" max="90" step="10" value="80" class="slider" oninput="updateReviewScoreValue(this.value)">
-            &nbsp<span id="reviewScoreValue">80</span>%
-            </div>
+      <div class="fetch-button">
+        <button onclick="fetchGames()" id="fetch">Fetch Games</button>
+      </div>
+
+      <div class="subsection">
+        <h3>Recommended Backlog Games</h3>
+        <div id="recommendedBacklog">
+          <p>No recommended games to display yet.</p>
         </div>
-
-        <div class="subsection">
-            <h3>Recommendation Survey</h3>
-            <p>Questions here</p>
-            <button onclick="filterGames()">Reccomend Games</button>
-        </div>
+        <button onclick="displayRecommendedBacklog()">Reroll</button>
+      </div>
 
         <div class="fetch-button">
 			<button onclick="fetchGames()" id="fetch">Fetch Games</button> 
