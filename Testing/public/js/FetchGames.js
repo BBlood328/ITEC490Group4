@@ -4,6 +4,10 @@ let storedGames = []; // Global array to store game data
 
 // Fetch games data
 async function fetchGames() {
+  // disable fetch games button
+  document.getElementById("fetch").disabled = true;
+  displayLoadingSpinner();
+
   const hoursPlayedValue = parseInt(
     document.getElementById("hoursPlayed").value,
     10
@@ -25,7 +29,8 @@ async function fetchGames() {
           if (reviewRatio >= reviewScoreValue) {
             const details = await fetchGameDetails(game.appid); // Fetch additional details
 
-            if (details) { // Details are not null
+            if (details) {
+              // Details are not null
               return {
                 name: game.name,
                 appid: game.appid,
@@ -44,6 +49,7 @@ async function fetchGames() {
 
     console.log("Stored Games:", storedGames); // Log the stored games array for debugging
 
+    document.getElementById("fetch").disabled = false;
     displayFullBacklog(); // Display the games in the full backlog table
   } catch (error) {
     console.error("Error fetching games data:", error);
@@ -85,7 +91,9 @@ async function fetchGameDetails(appid) {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/api/gameDetails?appid=${appid}`);
+    const response = await fetch(
+      `http://localhost:3000/api/gameDetails?appid=${appid}`
+    );
     const data = await response.json();
 
     const appData = data[appid]?.data;
@@ -134,7 +142,9 @@ function displayFullBacklog() {
   }, 0);
 
   // Update backlog stats
-  backlogStats.textContent = `${storedGames.length} Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
+  backlogStats.textContent = `${
+    storedGames.length
+  } Games | Total Price (MSRP): $${totalPrice.toFixed(2)}`;
 
   // Create a table
   const table = document.createElement("table");
@@ -148,9 +158,7 @@ function displayFullBacklog() {
   });
   table.appendChild(headerRow);
 
-
-  //TODO MAKE HEADERS CLICKABLE WITH SORTING https://www.w3schools.com/howto/howto_js_sort_table.asp 
-
+  //TODO MAKE HEADERS CLICKABLE WITH SORTING https://www.w3schools.com/howto/howto_js_sort_table.asp
 
   // name, genre, price, playtime, rating
   // Populate table rows with game data
@@ -189,7 +197,7 @@ function displayFullBacklog() {
     table.appendChild(row);
   });
 
-  gamesList.appendChild(table);   // Append the table to the gamesList div
+  gamesList.appendChild(table); // Append the table to the gamesList div
 }
 
 // Updates the displayed value of the hoursPlayed slider
@@ -200,4 +208,18 @@ function updateHoursPlayedValue(value) {
 // Updates the displayed value of the reviewScore slider
 function updateReviewScoreValue(value) {
   document.getElementById("reviewScoreValue").textContent = value;
+}
+
+function displayLoadingSpinner() {
+  // dotted loader
+  document.getElementById("fullBacklog").innerHTML =
+    '<span class="loader"></span>';
+
+  // 3 bars loader
+  // document.getElementById("fullBacklog").innerHTML =
+  //   '<div class="lds-bars"><div></div><div></div><div></div></div>';
+
+  // ring loader
+  // document.getElementById("fullBacklog").innerHTML =
+  //   '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>';
 }
