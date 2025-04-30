@@ -50,9 +50,8 @@ app.get('/login-failed', (req, res) => {
   res.send('Authentication failed. Please try again.');
 });
 
-// No longer needing to pass in steamId from query
+// Fetch games
 app.get("/api/games", async (req, res) => {
-  // const { steamid } = req.query;
   const steamid = req.session.steamId;
 
   if (!steamid) {
@@ -76,6 +75,7 @@ app.get("/api/games", async (req, res) => {
   }
 });
 
+// Fetch game details
 app.get('/api/gameDetails', async (req, res) => {
     const { appid } = req.query;
 
@@ -97,6 +97,7 @@ app.get('/api/gameDetails', async (req, res) => {
     }
 });
 
+// Fetch game reviews
 app.get('/api/gameReviews', async (req, res) => {
     const { appid } = req.query;
 
@@ -118,9 +119,29 @@ app.get('/api/gameReviews', async (req, res) => {
     }
 });
 
+// Fetch player summary
+app.get('/api/playerSummary', async (req, res) => {
+  const steamid = req.session.steamId;
 
-//TODO DISPLAY PROFILE NAME IN HEADER https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0002.29
+  if (!steamid) {
+    res.status(400).send('Missing steamid parameter');
+    return;
+  }
 
+  try {
+    const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamid}&format=json`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const json = await response.json();
+    res.json(json);
+  } catch (error) {
+    console.error('Error fetching player summary:', error);
+    res.status(500).json({ error: `Error fetching player summary: ${error.message}` });
+  }
+});
+
+// Logout
 app.get("/auth/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {

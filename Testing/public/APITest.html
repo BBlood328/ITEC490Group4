@@ -9,8 +9,16 @@
 </head>
 <body>
     <header>
-        <img src="./assets/images/steam-logo.png" alt="Steam Logo" style="width: auto; height: 130px;">
-		<h1>Steam Backlog Recommendation Generator</h1>
+        <!--Old Steam Logo  <img src="./assets/images/steam-logo.png" alt="Steam Logo" style="width: auto; height: 130px;"> -->
+        <div id="playerProfile">
+            <img id="playerAvatar" src=""> 
+            <span id="playerName"></span>
+        </div>
+
+        <div> 
+            <h1>Steam Backlog Recommendation Generator</h1> 
+        </div>
+
         <div>
             <button class="help">Help
                 <span class="helptext">
@@ -51,7 +59,7 @@
 
         <div class="subsection">
             <h3>Recommended Backlog Games</h3>
-            <div id="recommendedBacklog"><p>No recommended games to display yet.</p></div> <!-- The Complete Backlog List-->
+            <div id="recommendedBacklog"><p>No recommended games to display yet.</p></div>
             <button onclick="displayRecommendedBacklog()">Reroll</button>
         </div>
 

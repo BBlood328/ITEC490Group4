@@ -22,7 +22,6 @@ header {
 }
 
 
-
 header button {
         padding: 5px 15px;
         background-color: black;
@@ -35,6 +34,29 @@ header button {
 header div {
         margin: auto;
 }
+
+/* Player Profile, brians rough implementation
+Probably needs to be fixed to fit better at 1080p (maybe easier to shrink title more),
+Should be closer to the edge of the screen matching the buttons on right.
+Test with longer usernames */
+#playerProfile
+{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 5px 15px;
+        background-color: black;
+        color: white;
+        border-radius: 15px;
+        height: 70%;
+}
+
+#playerAvatar
+{
+        border-radius: 15px;
+        height:90%;
+}
+/* End Player Profile */
 
 main {
         padding: 10px 20px;

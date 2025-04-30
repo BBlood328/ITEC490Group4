@@ -1,5 +1,3 @@
-// FetchGames.js
-
 let storedGames = []; // Global array to store game data
 
 // Fetch games data
@@ -191,6 +189,26 @@ function displayFullBacklog() {
 
   gamesList.appendChild(table);   // Append the table to the gamesList div
 }
+
+// Fetch player profile and update header
+async function updatePlayerProfile() {
+  try {
+    const response = await fetch("http://localhost:3000/api/playerSummary");
+    const data = await response.json();
+
+    const player = data.response.players[0];
+    if (player) {
+      const avatar = document.getElementById("playerAvatar");
+      const personaName = document.getElementById("playerName");
+
+      avatar.src = player.avatarfull;
+      personaName.textContent = ` ${player.personaname}`;
+    }
+  } catch (error) {
+    console.error("Error fetching player profile:", error);
+  }
+}
+updatePlayerProfile(); // Call the function on login
 
 // Updates the displayed value of the hoursPlayed slider
 function updateHoursPlayedValue(value) {
