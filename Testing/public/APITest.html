@@ -18,21 +18,17 @@
         <div> 
             <h1>Steam Backlog Recommendation Generator</h1> 
         </div>
+
         <div>
-        <button class="help">
-          Help
-          <span class="helptext">
-            <h3>FaQ</h3>
-            <p>Q: Why aren't my games showing up</p>
-          </span>
-        </button>
-        <button id="about" onclick="window.open('webpage490.html', '_blank')">
-          About
-        </button>
-        <button id="logout" onclick="window.location.href='/auth/logout'">
-          Logout
-        </button>
-      </div>
+            <button class="help">Help
+                <span class="helptext">
+                <h3>FaQ</h3>
+                <p>Q: Why aren't my games showing up</p>
+                </span>
+            </button>
+            <button id="about" onclick="window.open('webpage490.html', '_blank')">About</button>
+            <button id="logout" onclick="window.location.href='/auth/logout'">Logout</button>
+        </div>
     </header>
 
     <main>
@@ -69,14 +65,14 @@
         </div>
       </div>
 
+      <div class="fetch-button">
+        <button onclick="fetchGames()" id="fetch">Fetch Games</button> 
+      </div>
+
       <div class="subsection">
         <h3>Recommendation Survey</h3>
         <p>Questions here</p>
         <button onclick="filterGames()">Reccomend Games</button>
-      </div>
-
-      <div class="fetch-button">
-        <button onclick="fetchGames()" id="fetch">Fetch Games</button>
       </div>
 
       <div class="subsection">
@@ -87,20 +83,10 @@
         <button onclick="displayRecommendedBacklog()">Reroll</button>
       </div>
 
-        <div class="fetch-button">
-			<button onclick="fetchGames()" id="fetch">Fetch Games</button> 
-		</div>
-
-        <div class="subsection">
-            <h3>Recommended Backlog Games</h3>
-            <div id="recommendedBacklog"><p>No recommended games to display yet.</p></div>
-            <button onclick="displayRecommendedBacklog()">Reroll</button>
-        </div>
-
-        <div class="subsection">
+      <div class="subsection">
             <h3>Full Backlog<div id="backlogStats">0 Games | Total Price (MSRP): $0.00</div> </h3> 
 		    <div id="fullBacklog">No games to display yet.</div>
-        </div>
+      </div>
 	</main>
 </body>
 
