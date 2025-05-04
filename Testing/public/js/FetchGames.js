@@ -14,7 +14,7 @@ async function fetchGames() {
     parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
 
   try {
-    const response = await fetch(`http://localhost:3000/api/games`);
+    const response = await fetch(`/api/games`);
     const data = await response.json();
 
     // Store game data in the global array, filtering by playtime and review ratio
@@ -62,9 +62,7 @@ async function fetchGameReviews(appid) {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/gameReviews?appid=${appid}`
-    );
+    const response = await fetch(`/api/gameReviews?appid=${appid}`);
     if (!response.ok) {
       console.error(
         `HTTP error while fetching reviews for appid ${appid}: ${response.status}`
@@ -95,9 +93,7 @@ async function fetchGameDetails(appid) {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/gameDetails?appid=${appid}`
-    );
+    const response = await fetch(`/api/gameDetails?appid=${appid}`);
     if (!response.ok) {
       console.warn(
         `HTTP error while fetching details for appid ${appid}: ${response.status}`
@@ -248,7 +244,9 @@ function sortTable(columnIndex) {
 // Fetch player profile and update header
 async function updatePlayerProfile() {
   try {
-    const response = await fetch("http://localhost:3000/api/playerSummary");
+    const response = await fetch("/api/playerSummary", {
+      credentials: "include", // IMPORTANT: include cookies in requests
+    });
     const data = await response.json();
 
     const player = data.response.players[0];
