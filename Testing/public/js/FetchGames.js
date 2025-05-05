@@ -2,16 +2,11 @@ let storedGames = []; // Global array to store game data
 
 // Fetch games data
 async function fetchGames() {
-  // disable fetch games button
-  document.getElementById("fetch").disabled = true;
-  displayLoadingSpinner();
+  document.getElementById("fetch").disabled = true;   // Disable the button
+  displayLoadingSpinner(); // Show loading spinner
 
-  const hoursPlayedValue = parseInt(
-    document.getElementById("hoursPlayed").value,
-    10
-  );
-  const reviewScoreValue =
-    parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
+  const hoursPlayedValue = parseInt(document.getElementById("hoursPlayed").value, 10);
+  const reviewScoreValue = parseInt(document.getElementById("reviewScore").value, 10) / 100; // Convert to decimal
 
   try {
     const response = await fetch(`http://localhost:3000/api/games`);
@@ -39,16 +34,17 @@ async function fetchGames() {
             reviewRatio: reviewRatio !== null ? reviewRatio : "N/A", // Use "N/A" if review ratio is unavailable
             price: details.price,
             genres: details.genres,
+            multiplayer: details.multiplayer,
           };
         })
     );
 
     storedGames = storedGames.filter((game) => game !== null); // Remove null values from the array
-
     console.log("Stored Games:", storedGames); // Log the stored games array for debugging
-
-    document.getElementById("fetch").disabled = false;  // Re-enable fetch games button
+    
+    document.getElementById("fetch").disabled = false; // Re-enable fetch button
     document.getElementById("recommend").disabled = false; // Enable recommend button
+
     displayFullBacklog(); // Display the games in the full backlog table
     enableGenreCheckboxes(); // Enable genre checkboxes based on backlog
   } catch (error) {
@@ -93,7 +89,7 @@ async function fetchGameReviews(appid) {
 async function fetchGameDetails(appid) {
   if (!appid) {
     console.error("Missing appid parameter for fetching game details.");
-    return { price: "Unknown", genres: ["Unknown"] }; // Default values if appid is missing
+    return null;
   }
 
   try {
@@ -116,8 +112,9 @@ async function fetchGameDetails(appid) {
 
     const price = appData.price_overview?.final_formatted || "Free";
     const genres = appData.genres?.map((genre) => genre.description) || [];
+    const multiplayer = appData.categories?.some((category) => category.description === "Multi-player") ? 1 : 0;
 
-    return { price, genres };
+    return { price, genres, multiplayer };
   } catch (error) {
     console.error(`Error fetching game details for appid ${appid}:`, error);
     return null; // Default values if an exception occurs
@@ -178,7 +175,7 @@ function displayFullBacklog() {
 
   // Create table header
   const headerRow = document.createElement("tr");
-  ["Name", "Genres", "Price", "Playtime", "Rating"].forEach(
+  ["Name", "Genres", "Multiplayer", "Price", "Playtime", "Rating"].forEach(
     (headerText, index) => {
       const th = document.createElement("th");
       th.textContent = headerText;
@@ -207,6 +204,11 @@ function displayFullBacklog() {
     genresCell.textContent = game.genres.join(", "); // Separate genres with a comma
     row.appendChild(genresCell);
 
+    // Create a cell for the multiplayer status
+    const multiplayerCell = document.createElement("td");
+    multiplayerCell.textContent = game.multiplayer === 1 ? "Yes" : "No"; // Display multiplayer status
+    row.appendChild(multiplayerCell);
+
     // Create a cell for the price
     const priceCell = document.createElement("td");
     priceCell.textContent = game.price;
@@ -233,21 +235,27 @@ function sortTable(columnIndex) {
   const table = document.querySelector("#fullBacklog table");
   const rows = Array.from(table.rows).slice(1); // Exclude header row
 
-  const isNumericColumn =
-    columnIndex === 2 || columnIndex === 3 || columnIndex === 4; // Price, Playtime, Rating
+  const isMultiplayerColumn = columnIndex === 2; // Multiplayer column
+  const isNumericColumn = columnIndex === 3 || columnIndex === 4 || columnIndex === 5; // Price, Playtime, Rating
   const isAscending = table.dataset.sortOrder !== "asc";
 
   rows.sort((a, b) => {
     const cellA = a.cells[columnIndex].textContent.trim();
     const cellB = b.cells[columnIndex].textContent.trim();
 
+    if (isMultiplayerColumn) {
+      const valueA = cellA === "Yes" ? 1 : 0;
+      const valueB = cellB === "Yes" ? 1 : 0;
+      return isAscending ? valueA - valueB : valueB - valueA;
+    }
+
     if (isNumericColumn) {
       const valueA =
-        columnIndex === 2 && cellA === "Free"
+        columnIndex === 3 && cellA === "Free"
           ? 0
           : parseFloat(cellA.replace(/[^0-9.-]+/g, ""));
       const valueB =
-        columnIndex === 2 && cellB === "Free"
+        columnIndex === 3 && cellB === "Free"
           ? 0
           : parseFloat(cellB.replace(/[^0-9.-]+/g, ""));
       return isAscending ? valueA - valueB : valueB - valueA;
