@@ -39,7 +39,7 @@ header div {
   margin: auto;
 }
 
-/* Player Profile, brians rough implementation, should probably start closer to the edge of the screen like the buttons on the right. and if window is narrow the title should go above the other two divs (if possible not a huge deal) */
+/* Player Profile, */
 #playerProfile {
   display: flex;
   align-items: center;
@@ -56,6 +56,48 @@ header div {
   height: 90%;
 }
 /* End Player Profile */
+
+/* Survey */
+.recommendedsurvey {
+  font-size: 20px;
+  text-align: center;
+  width: 60%;
+  background-color: rgb(26, 33, 42);
+  border-radius: 10px;
+  padding: 5px 15px;
+  margin: auto;
+  color: rgb(209, 229, 250);
+  padding: 10px;
+}
+
+#playerCount, #genre {
+  margin-bottom: 10px;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: center;
+  width: 33%;
+  margin: auto;
+}
+.radio-group label {
+  flex: 0 0 50%;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.checkbox {
+  display: flex;
+  flex-wrap:wrap;
+  width:75%;
+  margin:auto;
+}
+.checkbox label {
+  flex: 0 0 33%;
+  margin-top: 10px;
+}
+/* End Survey */
 
 main {
   padding: 10px 20px;
@@ -140,20 +182,10 @@ button {
   width: 75%;
   background-color: rgb(26, 33, 42);
   border-radius: 10px;
-  padding: 5px 15px;
+  padding: 10px 15px;
   margin: auto;
   color: rgb(209, 229, 250);
   font-size: 24px;
-}
-
-.recommendedsurvey {
-  text-align: center;
-  width: 60%;
-  background-color: rgb(26, 33, 42);
-  border-radius: 10px;
-  padding: 5px 15px;
-  margin: auto;
-  color: rgb(209, 229, 250);
 }
 
 .slider {
@@ -186,12 +218,13 @@ button {
 }
 
 #fetch {
-  font-size: x-large;
+  font-size: 24px;
   width: 100%;
   color: rgb(209, 229, 250);
   background-color: rgb(19, 26, 34);
   border-color: rgb(0, 0, 0);
   border-radius: 10px;
+  padding:5px;
 }
 
 #fetch:disabled {
@@ -200,20 +233,22 @@ button {
 
 #recommend {
   width: 100%;
-  font-size: large;
+  font-size: 24px;
   color: rgb(209, 229, 250);
   background-color: rgb(19, 26, 34);
   border-color: rgb(0, 0, 0);
   border-radius: 10px;
+  padding:5px;
 }
 
 #reroll {
-  font-size: large;
+  font-size: 24px;
   width: 10%;
   color: rgb(209, 229, 250);
   background-color: rgb(19, 26, 34);
   border-color: rgb(0, 0, 0);
   border-radius: 10px;
+  padding:5px;
 }
 
 /****************************Loading spinner styles*************************/
@@ -258,3 +293,4 @@ button {
     height: 32px;
   }
 }
+

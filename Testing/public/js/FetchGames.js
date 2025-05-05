@@ -124,6 +124,10 @@ async function fetchGameDetails(appid) {
 
 // TODO add filterGames() filter the storedGames array by user survey inputs and copy them to a clean filteredStoredGames array
 function filterGames() {
+
+
+
+  
   // Display initial reccomendations
   displayRecommendedBacklog();
 }
