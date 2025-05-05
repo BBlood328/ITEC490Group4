@@ -227,8 +227,9 @@ button {
   padding:5px;
 }
 
-#fetch:disabled {
+button:disabled, checkbox:disabled {
   opacity: 50%;
+  cursor: not-allowed;
 }
 
 #recommend {

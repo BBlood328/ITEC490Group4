@@ -47,8 +47,10 @@ async function fetchGames() {
 
     console.log("Stored Games:", storedGames); // Log the stored games array for debugging
 
-    document.getElementById("fetch").disabled = false;
+    document.getElementById("fetch").disabled = false;  // Re-enable fetch games button
+    document.getElementById("recommend").disabled = false; // Enable recommend button
     displayFullBacklog(); // Display the games in the full backlog table
+    enableGenreCheckboxes(); // Enable genre checkboxes based on backlog
   } catch (error) {
     console.error("Error fetching games data:", error);
   }
@@ -122,12 +124,23 @@ async function fetchGameDetails(appid) {
   }
 }
 
+// Enable genre checkboxes based on the stored games array
+function enableGenreCheckboxes() {
+  const genreCheckboxes = document.querySelectorAll("#genre input[type='checkbox']");
+  genreCheckboxes.forEach((checkbox) => {
+    const genre = checkbox.value;
+    if (storedGames.some((game) => game.genres.includes(genre))) {
+      checkbox.disabled = false; // Enable checkbox if the genre exists in the backlog
+    }
+  });
+}
+
 // TODO add filterGames() filter the storedGames array by user survey inputs and copy them to a clean filteredStoredGames array
 function filterGames() {
 
 
 
-  
+
   // Display initial reccomendations
   displayRecommendedBacklog();
 }
@@ -284,3 +297,5 @@ function displayLoadingSpinner() {
   document.getElementById("fullBacklog").innerHTML =
     '<div class="lds-bars"><div></div><div></div><div></div></div>';
 }
+
+
