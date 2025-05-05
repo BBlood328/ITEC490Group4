@@ -35,6 +35,10 @@ async function fetchGames() {
             price: details.price,
             genres: details.genres,
             multiplayer: details.multiplayer,
+            header_image: details.header_image,
+            screenshot1: details.screenshot1,
+            screenshot2: details.screenshot2,
+            screenshot3: details.screenshot3,
           };
         })
     );
@@ -113,8 +117,13 @@ async function fetchGameDetails(appid) {
     const price = appData.price_overview?.final_formatted || "Free";
     const genres = appData.genres?.map((genre) => genre.description) || [];
     const multiplayer = appData.categories?.some((category) => category.description === "Multi-player") ? 1 : 0;
+    const header_image = appData.header_image || null;
+    const screenshots = appData.screenshots || [];
+    const screenshot1 = screenshots[0]?.path_thumbnail || null;
+    const screenshot2 = screenshots[1]?.path_thumbnail || null;
+    const screenshot3 = screenshots[2]?.path_thumbnail || null;
 
-    return { price, genres, multiplayer };
+    return { price, genres, multiplayer, header_image, screenshot1, screenshot2, screenshot3 };
   } catch (error) {
     console.error(`Error fetching game details for appid ${appid}:`, error);
     return null; // Default values if an exception occurs
@@ -138,7 +147,7 @@ function filterGames() {
 
 
 
-  // Display initial reccomendations
+  // Display initial recommendations
   displayRecommendedBacklog();
 }
 
@@ -305,5 +314,3 @@ function displayLoadingSpinner() {
   document.getElementById("fullBacklog").innerHTML =
     '<div class="lds-bars"><div></div><div></div><div></div></div>';
 }
-
-
