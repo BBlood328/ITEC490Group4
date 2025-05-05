@@ -137,8 +137,17 @@ function enableGenreCheckboxes() {
     const genre = checkbox.value;
     if (storedGames.some((game) => game.genres.includes(genre))) {
       checkbox.disabled = false; // Enable checkbox if the genre exists in the backlog
+      checkbox.addEventListener("change", updateRecommendButtonState); // Add event listener
     }
   });
+  updateRecommendButtonState(); // Update initial state
+}
+
+// Update the state of the "Recommend Games" button if any checkboxes are checked
+function updateRecommendButtonState() {
+  const checkboxes = document.querySelectorAll("#genre input[type='checkbox']");
+  const recommendButton = document.getElementById("recommend");
+  recommendButton.disabled = !Array.from(checkboxes).some((checkbox) => checkbox.checked);
 }
 
 // TODO add filterGames() filter the storedGames array by user survey inputs and copy them to a clean filteredStoredGames array
