@@ -179,25 +179,23 @@ function filterGames() {
 
 function updateRecommendedGameDisplay() {
   const recommendedBacklog = document.getElementById("recommendedBacklog");
-  const nextButton = document.getElementById("next");
 
   if (recommendedGames.length === 0) {
     recommendedBacklog.innerHTML = "<p>No games to display.</p>";
-    nextButton.disabled = true;
     return;
   }
 
   const game = recommendedGames[currentGameIndex];
 
   // Update or create elements dynamically
-  let header = recommendedBacklog.querySelector("h4"); // Select the element
-  if (!header) {                                       // Create it if it doesn't exist
+  let header = recommendedBacklog.querySelector("h4");
+  if (!header) {
     header = document.createElement("h4");
     recommendedBacklog.appendChild(header);
   }
-  header.textContent = game.name;                      // Update the text content
+  header.textContent = game.name;
 
-  let headerImage = recommendedBacklog.querySelector(".header-image"); // Repeat for all elements
+  let headerImage = recommendedBacklog.querySelector(".header-image");
   if (!headerImage) {
     headerImage = document.createElement("img");
     headerImage.className = "header-image";
@@ -258,13 +256,20 @@ function updateRecommendedGameDisplay() {
     ${game.screenshot3 ? `<img src="${game.screenshot3}" alt="Screenshot 3">` : ""}
   `;
 
-  nextButton.disabled = false; // Enable the next button
+  // Create or enable the "Next Game" button
+  let nextButton = document.getElementById("next");
+  if (!nextButton) {
+    nextButton = document.createElement("button");
+    nextButton.id = "next";
+    nextButton.textContent = "Next Game";
+    nextButton.addEventListener("click", () => {
+      currentGameIndex = (currentGameIndex + 1) % recommendedGames.length; // Loop back to the first game
+      updateRecommendedGameDisplay();
+    });
+    recommendedBacklog.appendChild(nextButton);
+  }
+  nextButton.disabled = false; // Enable the button
 }
-
-document.getElementById("next").addEventListener("click", () => {
-  currentGameIndex = (currentGameIndex + 1) % recommendedGames.length; // Loop back to the first game
-  updateRecommendedGameDisplay();
-});
 
 // Display the full backlog
 function displayFullBacklog() {
