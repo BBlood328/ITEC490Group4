@@ -72,8 +72,8 @@
         <button onclick="fetchGames()" id="fetch">Fetch Games</button> 
       </div>
 
-      <div class="recommendedsurvey">
-        <label for="playerCount"><b>Player Count:</b></label>
+      <div class="recommended-survey">
+        <label for="playerCount"><b>Player Count</b></label>
           <div id="playerCount" name="playerCount">
             <div class="radio-group">
               <label><input type="radio" name="gameType" value="Singleplayer" checked /> Singleplayer</label>
@@ -81,7 +81,7 @@
             </div>
           </div>
 
-        <label for="genre"><b>Preferred Genres:</b></label>
+        <label for="genre"><b>Preferred Genres</b></label>
           <div id="genre" name="genre">
             <div class="checkbox">
                 <label><input type="checkbox" value="Indie" disabled /> Indie</label>
@@ -101,13 +101,12 @@
         <button onclick="filterGames()" id="recommend" disabled>Recommend Games</button>
       </div>
 
-      <div class="subsection">
-        <div id="recommendedBacklog"></div>
-      </div>
-
-      <div class="subsection">
-            <h3>Full Backlog<div id="backlogStats">0 Games | Total Price (MSRP): $0.00</div> </h3> 
-		    <div id="fullBacklog">No games to display yet.</div>
+      <div class="recommended-backlog" id="recommendedBacklog"></div>
+      <div id="next-button"></div>
+      
+      <div class="full-backlog">
+        <h3>Full Backlog<div id="backlogStats">0 Games | Total Price (MSRP): $0.00</div> </h3> 
+        <div id="fullBacklog">No games to display yet.</div>
       </div>
 	</main>
 </body>

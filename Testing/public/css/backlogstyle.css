@@ -24,6 +24,7 @@ header {
   padding: 10px 20px;
   grid-template-rows: auto;
   grid-template-columns: 15% 70% 15%;
+  margin-bottom: 5px;
 }
 
 header button {
@@ -37,6 +38,98 @@ header button {
 
 header div {
   margin: auto;
+}
+
+button {
+  margin: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.help {
+  position: relative;
+}
+
+.help .helptext {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgb(26, 33, 42);
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 18px;
+  z-index: 1;
+  width: 400px;
+  top: 125%;
+  left: 50%;
+  margin-left: -200px;
+}
+
+.help:hover .helptext {
+  visibility: visible;
+}
+
+.preference-sliders {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 50% 50%;
+  margin-top: 10px;
+}
+
+.preference-sliders div {
+  display: flex;
+  justify-content: center;
+  width: 55%;
+  background-color: rgb(26, 33, 42);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: auto;
+  color: rgb(209, 229, 250);
+  font-size: 24px;
+}
+
+.slider {
+  appearance: none;
+  height: 10px;
+  border-radius: 10px;
+  background: #6b6b6b;
+  margin: auto 0px;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 20px;
+  background: rgb(61, 76, 97);
+  cursor: pointer;
+}
+
+.submit-button {
+  width: 20%;
+  margin: auto;
+}
+
+#fetch {
+  font-size: 24px;
+  width: 100%;
+  color: rgb(209, 229, 250);
+  background-color: rgb(19, 26, 34);
+  border-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  padding:5px;
+  border: 2px solid black;
+}
+
+button:disabled, checkbox:disabled {
+  opacity: 50%;
+  cursor: not-allowed;
+}
+
+.landing-page {
+  text-align:center;
+  font-size: 24px;
 }
 
 main {
@@ -63,16 +156,15 @@ main {
 /* End Player Profile */
 
 /* Survey */
-.recommendedsurvey {
+.recommended-survey {
   font-size: 20px;
   text-align: center;
-  width: 60%;
+  width: 70%;
   background-color: rgb(26, 33, 42);
   border-radius: 10px;
-  padding: 5px 15px;
   margin: auto;
   color: rgb(209, 229, 250);
-  padding: 10px;
+  padding: 15px;
 }
 
 #playerCount, #genre {
@@ -102,10 +194,38 @@ main {
   flex: 0 0 33%;
   margin-top: 10px;
 }
+
+#recommend {
+  width: 100%;
+  font-size: 24px;
+  color: rgb(209, 229, 250);
+  background-color: rgb(19, 26, 34);
+  border-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  padding:5px;
+  border: 2px solid black;
+}
+
+
 /* End Survey */
 
 
 /* Recommended Games */
+.recommended-backlog {
+  display: none; /* Hide by default */
+  font-size: 20px;
+  text-align: center;
+  width: 80%;
+  background-color: rgb(26, 33, 42);
+  border-radius: 10px;
+  margin: auto;
+  color: rgb(209, 229, 250);
+  padding: 15px;
+  margin-bottom: 10px;
+  padding-top: 1px;
+  padding-bottom: 20px;
+}
+
 .recommended-backlog img.header-image {
   width: 100%;
   max-width: 800px;
@@ -124,12 +244,46 @@ main {
   width: 30%;
   max-width: 600px;
 }
+
+#next {
+  font-size: 24px;
+  width: 100%;
+  color: rgb(209, 229, 250);
+  background-color: rgb(19, 26, 34);
+  border-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  padding:5px;
+  border: 2px solid black;
+}
+
+#next-button {
+  display: none; /* Hide by default */
+  width: 20%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 /* End Recommended Games */
 
+
+/*Full Backlog */
+.full-backlog {
+  font-size: 20px;
+  text-align: center;
+  width: 92%;
+  background-color: rgb(26, 33, 42);
+  border-radius: 10px;
+  padding: 5px 15px;
+  margin: auto;
+  color: rgb(209, 229, 250);
+  padding-bottom: 25px;
+  padding-top: 1px;
+}
 
 table {
   background-color: rgb(143, 170, 201);
   width: 90%;
+  color:black;
   font-size: x-large;
   border-collapse: collapse;
   margin: auto;
@@ -160,124 +314,7 @@ th:nth-child(2) {
 td:nth-child(n + 4) {
   text-align: center;
 }
-
-button {
-  margin: 10px;
-  cursor: pointer;
-}
-
-.help {
-  position: relative;
-}
-
-.help .helptext {
-  visibility: hidden;
-  position: absolute;
-  background-color: rgb(26, 33, 42);
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 18px;
-  z-index: 1;
-  width: 400px;
-  top: 125%;
-  left: 50%;
-  margin-left: -200px;
-}
-
-.help:hover .helptext {
-  visibility: visible;
-}
-
-.dataentry {
-  margin-left: 2%;
-}
-
-.preference-sliders {
-  width: 90%;
-  margin: auto;
-  display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: 50% 50%;
-}
-
-.preference-sliders div {
-  display: flex;
-  justify-content: center;
-  width: 75%;
-  background-color: rgb(26, 33, 42);
-  border-radius: 10px;
-  padding: 10px 15px;
-  margin: auto;
-  color: rgb(209, 229, 250);
-  font-size: 24px;
-}
-
-.slider {
-  appearance: none;
-  height: 10px;
-  border-radius: 10px;
-  background: #6b6b6b;
-  margin: auto 0px;
-}
-
-.slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 10px;
-  height: 20px;
-  background: rgb(61, 76, 97);
-  cursor: pointer;
-}
-
-.submit-button {
-  width: 20%;
-  margin: auto;
-}
-
-.subsection {
-  text-align: center;
-}
-
-.subsection h3 {
-  font-size: 24px;
-}
-
-#fetch {
-  font-size: 24px;
-  width: 100%;
-  color: rgb(209, 229, 250);
-  background-color: rgb(19, 26, 34);
-  border-color: rgb(0, 0, 0);
-  border-radius: 10px;
-  padding:5px;
-  border: 2px solid black;
-}
-
-button:disabled, checkbox:disabled {
-  opacity: 50%;
-  cursor: not-allowed;
-}
-
-#recommend {
-  width: 100%;
-  font-size: 24px;
-  color: rgb(209, 229, 250);
-  background-color: rgb(19, 26, 34);
-  border-color: rgb(0, 0, 0);
-  border-radius: 10px;
-  padding:5px;
-  border: 2px solid black;
-}
-
-#next {
-  font-size: 24px;
-  width: 10%;
-  color: rgb(209, 229, 250);
-  background-color: rgb(19, 26, 34);
-  border-color: rgb(0, 0, 0);
-  border-radius: 10px;
-  padding:5px;
-  border: 2px solid black;
-}
+/* End Full Backlog */
 
 /* Loading Bars Animation */
 .lds-bars,

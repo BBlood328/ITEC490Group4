@@ -175,13 +175,17 @@ function filterGames() {
   console.log("Filtered Games:", recommendedGames); // Log the filtered games array for debugging
   currentGameIndex = 0; // Reset the index
   updateRecommendedGameDisplay(); // Display the first game
+  document.querySelector(".recommended-backlog").style.display = "block";
+  document.getElementById("next-button").style.display = "block";
 }
 
 function updateRecommendedGameDisplay() {
   const recommendedBacklog = document.getElementById("recommendedBacklog");
+  const nextButtonContainer = document.getElementById("next-button");
 
   if (recommendedGames.length === 0) {
     recommendedBacklog.innerHTML = "<p>No games to display.</p>";
+    nextButtonContainer.innerHTML = ""; // Clear the next button container
     return;
   }
 
@@ -193,7 +197,7 @@ function updateRecommendedGameDisplay() {
     header = document.createElement("h4");
     recommendedBacklog.appendChild(header);
   }
-  header.textContent = game.name;
+  header.innerHTML = `<strong>${game.name}</strong>`;
 
   let headerImage = recommendedBacklog.querySelector(".header-image");
   if (!headerImage) {
@@ -256,8 +260,8 @@ function updateRecommendedGameDisplay() {
     ${game.screenshot3 ? `<img src="${game.screenshot3}" alt="Screenshot 3">` : ""}
   `;
 
-  // Create or enable the "Next Game" button
-  let nextButton = document.getElementById("next");
+  // Create the "Next Game" button inside the next-button div if it doesn't exist
+  let nextButton = nextButtonContainer.querySelector("#next");
   if (!nextButton) {
     nextButton = document.createElement("button");
     nextButton.id = "next";
@@ -266,9 +270,8 @@ function updateRecommendedGameDisplay() {
       currentGameIndex = (currentGameIndex + 1) % recommendedGames.length; // Loop back to the first game
       updateRecommendedGameDisplay();
     });
-    recommendedBacklog.appendChild(nextButton);
+    nextButtonContainer.appendChild(nextButton);
   }
-  nextButton.disabled = false; // Enable the button
 }
 
 // Display the full backlog
