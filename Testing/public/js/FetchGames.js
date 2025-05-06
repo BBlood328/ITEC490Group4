@@ -1,4 +1,6 @@
 let storedGames = []; // Global array to store game data
+let recommendedGames = []; // Global array to store filtered games for recommendations
+let currentGameIndex = 0; // Index to track the current game being displayed
 
 // Fetch games data
 async function fetchGames() {
@@ -150,20 +152,119 @@ function updateRecommendButtonState() {
   recommendButton.disabled = !Array.from(checkboxes).some((checkbox) => checkbox.checked);
 }
 
-// TODO add filterGames() filter the storedGames array by user survey inputs and copy them to a clean filteredStoredGames array
+// Filter games based on selected player count and genres
 function filterGames() {
+  const playerCount = document.querySelector('input[name="gameType"]:checked').value;
+  const selectedGenres = Array.from(
+    document.querySelectorAll('#genre input[type="checkbox"]:checked')
+  ).map((checkbox) => checkbox.value);
 
+  recommendedGames = storedGames.filter((game) => {
+    const matchesPlayerCount =
+      (playerCount === "Singleplayer" && game.multiplayer === 0) ||
+      (playerCount === "Multiplayer" && game.multiplayer === 1);
+    const matchesGenre = game.genres.some((genre) => selectedGenres.includes(genre));
+    return matchesPlayerCount && matchesGenre;
+  });
+  
+  if (recommendedGames.length === 0) { 
+    alert(`No ${playerCount} ${selectedGenres.join(", ")} games found.`);
+    return; //No games found
+  }
 
-
-
-  // Display initial recommendations
-  displayRecommendedBacklog();
+  console.log("Filtered Games:", recommendedGames); // Log the filtered games array for debugging
+  currentGameIndex = 0; // Reset the index
+  updateRecommendedGameDisplay(); // Display the first game
 }
 
-// TODO add displayRecommendedBacklog() to only display a few games at a time picked at random from the filteredStoredGames array
-function displayRecommendedBacklog() {
-  // Display a few games picked at random from the filteredStoredGames array
+function updateRecommendedGameDisplay() {
+  const recommendedBacklog = document.getElementById("recommendedBacklog");
+  const nextButton = document.getElementById("next");
+
+  if (recommendedGames.length === 0) {
+    recommendedBacklog.innerHTML = "<p>No games to display.</p>";
+    nextButton.disabled = true;
+    return;
+  }
+
+  const game = recommendedGames[currentGameIndex];
+
+  // Update or create elements dynamically
+  let header = recommendedBacklog.querySelector("h4"); // Select the element
+  if (!header) {                                       // Create it if it doesn't exist
+    header = document.createElement("h4");
+    recommendedBacklog.appendChild(header);
+  }
+  header.textContent = game.name;                      // Update the text content
+
+  let headerImage = recommendedBacklog.querySelector(".header-image"); // Repeat for all elements
+  if (!headerImage) {
+    headerImage = document.createElement("img");
+    headerImage.className = "header-image";
+    recommendedBacklog.appendChild(headerImage);
+  }
+  headerImage.src = game.header_image;
+  headerImage.alt = `${game.name} Header Image`;
+
+  let genres = recommendedBacklog.querySelector(".genres");
+  if (!genres) {
+    genres = document.createElement("p");
+    genres.className = "genres";
+    recommendedBacklog.appendChild(genres);
+  }
+  genres.innerHTML = `<strong>Genres:</strong> ${game.genres.join(", ")}`;
+
+  let multiplayer = recommendedBacklog.querySelector(".multiplayer");
+  if (!multiplayer) {
+    multiplayer = document.createElement("p");
+    multiplayer.className = "multiplayer";
+    recommendedBacklog.appendChild(multiplayer);
+  }
+  multiplayer.innerHTML = `<strong>Multiplayer:</strong> ${game.multiplayer === 1 ? "Yes" : "No"}`;
+
+  let price = recommendedBacklog.querySelector(".price");
+  if (!price) {
+    price = document.createElement("p");
+    price.className = "price";
+    recommendedBacklog.appendChild(price);
+  }
+  price.innerHTML = `<strong>Price:</strong> ${game.price}`;
+
+  let playtime = recommendedBacklog.querySelector(".playtime");
+  if (!playtime) {
+    playtime = document.createElement("p");
+    playtime.className = "playtime";
+    recommendedBacklog.appendChild(playtime);
+  }
+  playtime.innerHTML = `<strong>Playtime:</strong> ${game.playtime} hrs`;
+
+  let rating = recommendedBacklog.querySelector(".rating");
+  if (!rating) {
+    rating = document.createElement("p");
+    rating.className = "rating";
+    recommendedBacklog.appendChild(rating);
+  }
+  rating.innerHTML = `<strong>Rating:</strong> ${Math.round(game.reviewRatio * 100)}%`;
+
+  let screenshots = recommendedBacklog.querySelector(".screenshots");
+  if (!screenshots) {
+    screenshots = document.createElement("div");
+    screenshots.className = "screenshots";
+    recommendedBacklog.appendChild(screenshots);
+  }
+  screenshots.innerHTML = `
+    ${game.screenshot1 ? `<img src="${game.screenshot1}" alt="Screenshot 1">` : ""}
+    ${game.screenshot2 ? `<img src="${game.screenshot2}" alt="Screenshot 2">` : ""}
+    ${game.screenshot3 ? `<img src="${game.screenshot3}" alt="Screenshot 3">` : ""}
+  `;
+
+  nextButton.disabled = false; // Enable the next button
 }
+
+document.getElementById("next").addEventListener("click", () => {
+  currentGameIndex = (currentGameIndex + 1) % recommendedGames.length; // Loop back to the first game
+  updateRecommendedGameDisplay();
+});
 
 // Display the full backlog
 function displayFullBacklog() {

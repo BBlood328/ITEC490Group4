@@ -39,6 +39,10 @@ header div {
   margin: auto;
 }
 
+main {
+  padding: 10px 20px;
+}
+
 /* Player Profile, */
 #playerProfile {
   display: flex;
@@ -100,9 +104,28 @@ header div {
 }
 /* End Survey */
 
-main {
-  padding: 10px 20px;
+
+/* Recommended Games */
+.recommended-backlog img.header-image {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 10px;
 }
+
+.recommended-backlog .screenshots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.recommended-backlog .screenshots img {
+  width: 30%;
+  max-width: 600px;
+}
+/* End Recommended Games */
+
 
 table {
   background-color: rgb(143, 170, 201);
@@ -245,7 +268,7 @@ button:disabled, checkbox:disabled {
   border: 2px solid black;
 }
 
-#reroll {
+#next {
   font-size: 24px;
   width: 10%;
   color: rgb(209, 229, 250);
@@ -256,7 +279,7 @@ button:disabled, checkbox:disabled {
   border: 2px solid black;
 }
 
-/****************************Loading spinner styles*************************/
+/* Loading Bars Animation */
 .lds-bars,
 .lds-bars div {
   box-sizing: border-box;
@@ -298,3 +321,4 @@ button:disabled, checkbox:disabled {
     height: 32px;
   }
 }
+/* End Loading Bars Animation */
