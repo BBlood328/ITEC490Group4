@@ -3,8 +3,8 @@
 ## To Run Web App
 
 ```
-cd ITEC490Group4/Testing
-npm run dev
+cd ITEC490Group4
+npm run start
 ```
 
 ## UI Mockups
