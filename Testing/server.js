@@ -38,7 +38,7 @@ app.get('/auth/steam/return', async (req, res) => {
     req.session.steamId = steamId64;
 
     // Redirect to a success page or homepage
-    res.redirect('/APITest.html');
+    res.redirect('/recommender.html');
   } catch (error) {
     console.error('Authentication failed:', error);
     res.redirect('/login-failed'); // Redirect to an error page
@@ -148,7 +148,7 @@ app.get("/auth/logout", (req, res) => {
       console.error("Error destroying session:", err);
       return res.status(500).send("Error logging out");
     } else{
-      res.redirect("/landingPage.html"); // Redirect to home page after logout
+      res.redirect("/login.html"); // Redirect to home page after logout
     }
   });
 });
