@@ -17,6 +17,8 @@ body {
 }
 
 header {
+  background-image: url("../assets/images/steambanner.jpg");
+  background-size: auto;
   background-color: rgb(50, 72, 103);
   font-size: 26px;
   text-align: center;
