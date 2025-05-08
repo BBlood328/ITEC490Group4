@@ -46,7 +46,6 @@ async function fetchGames() {
     );
 
     storedGames = storedGames.filter((game) => game !== null); // Remove null values from the array
-    console.log("Stored Games:", storedGames); // Log the stored games array for debugging
     
     document.getElementById("fetch").disabled = false; // Re-enable fetch button
     document.getElementById("recommend").disabled = false; // Enable recommend button
@@ -172,7 +171,6 @@ function filterGames() {
     return; //No games found
   }
 
-  console.log("Filtered Games:", recommendedGames); // Log the filtered games array for debugging
   currentGameIndex = 0; // Reset the index
   updateRecommendedGameDisplay(); // Display the first game
   document.querySelector(".recommended-backlog").style.display = "block";
@@ -197,14 +195,21 @@ function updateRecommendedGameDisplay() {
     header = document.createElement("h4");
     recommendedBacklog.appendChild(header);
   }
-  header.innerHTML = `<strong>${game.name}</strong>`;
+  header.innerHTML = `<strong><a href="https://store.steampowered.com/app/${game.appid}" target="_blank">${game.name}</a></strong>`;
 
   let headerImage = recommendedBacklog.querySelector(".header-image");
   if (!headerImage) {
+    const link = document.createElement("a");
+    link.className = "header-image-link";
+    link.target = "_blank";
+    recommendedBacklog.appendChild(link);
+
     headerImage = document.createElement("img");
     headerImage.className = "header-image";
-    recommendedBacklog.appendChild(headerImage);
+    link.appendChild(headerImage);
   }
+  const link = recommendedBacklog.querySelector(".header-image-link");
+  link.href = `steam://run/${game.appid}`;
   headerImage.src = game.header_image;
   headerImage.alt = `${game.name} Header Image`;
 
