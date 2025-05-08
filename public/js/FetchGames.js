@@ -210,6 +210,7 @@ function updateRecommendedGameDisplay() {
   }
   const link = recommendedBacklog.querySelector(".header-image-link");
   link.href = `steam://run/${game.appid}`;
+  link.title = "Click to install"; // Hover text
   headerImage.src = game.header_image;
   headerImage.alt = `${game.name} Header Image`;
 
