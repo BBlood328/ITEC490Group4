@@ -16,6 +16,11 @@ body {
   font-family: "Motiva Sans", sans-serif;
 }
 
+a, a:visited {
+  color: inherit; /* links do not change color */
+  /* text-decoration: none;  remove underline from links */
+}
+
 header {
   background-color: rgb(50, 72, 103);
   font-size: 26px;

@@ -3,7 +3,15 @@
 ## To Run Web App
 
 ```
+Create config.js in project root containing the following:
+
+module.exports = {
+  apiKey: "YOUR_STEAM_API_KEY_HERE"
+};
+
+
 npm run start
+
 ```
 
 ## UI Mockups

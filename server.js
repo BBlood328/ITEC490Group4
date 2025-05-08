@@ -3,9 +3,9 @@ const session = require("express-session");
 const SteamSignIn = require("steam-signin");
 const fetch = require("node-fetch");
 const cors = require("cors");
+const { apiKey } = require("./config"); // Import apiKey from config.js
 
 const app = express();
-const apiKey = "7902896BCA5AE5A60C7CC073AE6E3883"; // API key *hide this from githib in config file later*
 
 app.use(cors()); // Enable CORS
 app.use(express.static("public")); // Handles requests to the html pages
