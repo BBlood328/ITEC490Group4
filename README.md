@@ -3,7 +3,6 @@
 ## To Run Web App
 
 ```
-cd ITEC490Group4
 npm run start
 ```
 
